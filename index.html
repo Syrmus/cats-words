@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cat's Words</title>
+  <style>
+    :root {
+      --bg-1: #fff8ed;
+      --bg-2: #e9f8f5;
+      --card: #ffffff;
+      --ink: #1f2a37;
+      --accent: #1f8a70;
+      --accent-soft: #d7f0e8;
+      --wrong: #c0392b;
+      --wrong-soft: #ffd8d4;
+      --matched: #7d8b99;
+      --muted: #5f6f7f;
+      --star: #f4b400;
+      --shadow: 0 10px 25px rgba(31, 42, 55, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 15% 20%, #ffffff 0%, transparent 30%),
+        radial-gradient(circle at 80% 10%, #fce8d7 0%, transparent 28%),
+        linear-gradient(140deg, var(--bg-1), var(--bg-2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .screen {
+      width: min(980px, 100%);
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(4px);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 20px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .front {
+      text-align: center;
+      padding: 24px 16px;
+    }
+
+    .cat-logo {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 10px;
+      display: block;
+    }
+
+    .front h1 {
+      margin: 0;
+      font-size: clamp(1.7rem, 3vw, 2.3rem);
+      letter-spacing: 0.4px;
+    }
+
+    .front p {
+      margin: 8px 0 20px;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .front-grid {
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: left;
+      display: grid;
+      gap: 16px;
+    }
+
+    .panel {
+      border: 1px solid #dde5ec;
+      border-radius: 14px;
+      padding: 14px;
+      background: #ffffff;
+    }
+
+    .panel h2 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #4c5a68;
+    }
+
+    .levels {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .level-option input {
+      display: none;
+    }
+
+    .level-option span {
+      display: block;
+      text-align: center;
+      padding: 10px;
+      border-radius: 10px;
+      border: 2px solid #d9e1e7;
+      background: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      user-select: none;
+      transition: 0.15s ease;
+    }
+
+    .level-option input:checked + span {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      color: #0f5f4b;
+    }
+
+    .check {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      color: #314253;
+      margin-top: 8px;
+    }
+
+    .front-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      padding: 11px 20px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn.secondary {
+      background: #5c6b78;
+    }
+
+    .btn:hover {
+      filter: brightness(0.95);
+    }
+
+    .hint {
+      margin-top: 10px;
+      min-height: 20px;
+      color: #37506a;
+      font-weight: 600;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .title {
+      margin: 0;
+      font-size: clamp(1.1rem, 2.3vw, 1.6rem);
+      letter-spacing: 0.2px;
+    }
+
+    .stats {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      background: #fff;
+      border: 1px solid #d9e1e7;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .column {
+      background: #fdfefe;
+      border: 1px solid #e2e8ee;
+      border-radius: 14px;
+      padding: 12px;
+    }
+
+    .column h2 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #4c5a68;
+    }
+
+    .cards {
+      display: grid;
+      gap: 10px;
+    }
+
+    .card-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .card {
+      border: 2px solid transparent;
+      background: var(--card);
+      border-radius: 10px;
+      padding: 14px 12px;
+      text-align: left;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1f2a37;
+      box-shadow: 0 4px 10px rgba(31, 42, 55, 0.08);
+      transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .card:hover:not(:disabled) {
+      transform: translateY(-1px);
+      border-color: #c5d5e2;
+    }
+
+    .card.selected {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .card.wrong {
+      border-color: var(--wrong);
+      background: var(--wrong-soft);
+      color: #7b241c;
+    }
+
+    .card.matched {
+      background: #eff3f6;
+      border-color: #d9e1e7;
+      color: var(--matched);
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .star-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      border: 1px solid #d1dae3;
+      background: #ffffff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: #8fa0b0;
+    }
+
+    .star-btn.on {
+      color: var(--star);
+      border-color: #f1d67c;
+      background: #fff8db;
+    }
+
+    .star-btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .status {
+      margin-top: 14px;
+      min-height: 24px;
+      font-weight: 600;
+      color: #37506a;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(31, 42, 55, 0.4);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      background: #fff;
+      border-radius: 16px;
+      padding: 22px;
+      width: min(430px, 100%);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .modal h3 {
+      margin: 0 0 8px;
+      font-size: 1.4rem;
+    }
+
+    .modal p {
+      margin: 6px 0;
+      font-size: 1rem;
+    }
+
+    .training-box {
+      border: 1px solid #dde5ec;
+      border-radius: 14px;
+      padding: 16px;
+      background: #fff;
+    }
+
+    .training-word {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .training-translation {
+      margin: 6px 0 14px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .training-label {
+      margin: 14px 0 6px;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      color: #5f6f7f;
+      letter-spacing: 0.8px;
+    }
+
+    .training-text {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    .training-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 820px) {
+      .levels {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .board {
+        grid-template-columns: 1fr;
+      }
+
+      .column h2 {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section id="front-screen" class="screen front">
+    <svg class="cat-logo" viewBox="0 0 120 120" aria-hidden="true">
+      <path d="M25 35 L40 15 L52 40" fill="#f5b27a"></path>
+      <path d="M95 35 L80 15 L68 40" fill="#f5b27a"></path>
+      <circle cx="60" cy="60" r="35" fill="#ffd4a3"></circle>
+      <circle cx="46" cy="58" r="4" fill="#1f2a37"></circle>
+      <circle cx="74" cy="58" r="4" fill="#1f2a37"></circle>
+      <ellipse cx="60" cy="70" rx="6" ry="4" fill="#e88b7c"></ellipse>
+      <path d="M54 74 Q60 80 66 74" stroke="#1f2a37" stroke-width="3" fill="none" stroke-linecap="round"></path>
+      <path d="M22 65 H45" stroke="#b17845" stroke-width="3" stroke-linecap="round"></path>
+      <path d="M22 73 H45" stroke="#b17845" stroke-width="3" stroke-linecap="round"></path>
+      <path d="M75 65 H98" stroke="#b17845" stroke-width="3" stroke-linecap="round"></path>
+      <path d="M75 73 H98" stroke="#b17845" stroke-width="3" stroke-linecap="round"></path>
+    </svg>
+
+    <h1>Cat's Words</h1>
+    <p>Match English and German cards, build your own dictionary, and train context.</p>
+
+    <div class="front-grid">
+      <div class="panel">
+        <h2>Choose Difficulty</h2>
+        <div class="levels">
+          <label class="level-option">
+            <input type="radio" name="difficulty" value="A1" checked>
+            <span>A1</span>
+          </label>
+          <label class="level-option">
+            <input type="radio" name="difficulty" value="A2">
+            <span>A2</span>
+          </label>
+          <label class="level-option">
+            <input type="radio" name="difficulty" value="B1">
+            <span>B1</span>
+          </label>
+          <label class="level-option">
+            <input type="radio" name="difficulty" value="B2">
+            <span>B2</span>
+          </label>
+          <label class="level-option">
+            <input type="radio" name="difficulty" value="C1">
+            <span>C1</span>
+          </label>
+        </div>
+
+        <label class="check">
+          <input id="dict-only" type="checkbox" />
+          Play only with words from my dictionary
+        </label>
+      </div>
+
+      <div class="panel">
+        <h2>Modes</h2>
+        <div class="front-actions">
+          <button id="start-game" class="btn">Start Game</button>
+          <button id="start-training" class="btn secondary">Dictionary Training</button>
+        </div>
+        <div id="front-status" class="hint"></div>
+        <div class="hint" id="record-front">Best score: 0</div>
+      </div>
+    </div>
+  </section>
+
+  <main id="game-screen" class="screen hidden">
+    <div class="header">
+      <h1 class="title">Cat's Words: English <-> German</h1>
+      <div class="header-actions">
+        <div class="stats">
+          <div class="pill" id="mode-pill">Mode: Level</div>
+          <div class="pill" id="level-pill">Level: A1</div>
+          <div class="pill" id="stage-pill">Stage: 1</div>
+          <div class="pill" id="timer-pill">Time: 60s</div>
+          <div class="pill" id="total-pill">Total points: 0</div>
+          <div class="pill" id="record-pill">Best: 0</div>
+        </div>
+        <button id="game-home" class="btn secondary">Home</button>
+      </div>
+    </div>
+
+    <section class="board">
+      <div class="column">
+        <h2>English</h2>
+        <div id="english-cards" class="cards"></div>
+      </div>
+      <div class="column">
+        <h2>German</h2>
+        <div id="german-cards" class="cards"></div>
+      </div>
+    </section>
+
+    <div id="status" class="status"></div>
+  </main>
+
+  <main id="training-screen" class="screen hidden">
+    <div class="header">
+      <h1 class="title">Dictionary Training</h1>
+      <div class="stats">
+        <div class="pill" id="training-count-pill">Words: 0</div>
+      </div>
+    </div>
+
+    <section class="training-box">
+      <h2 id="training-word" class="training-word">No words yet</h2>
+      <p id="training-translation" class="training-translation"></p>
+
+      <h3 class="training-label">Definition (DE)</h3>
+      <p id="training-definition" class="training-text"></p>
+
+      <h3 class="training-label">Example (DE)</h3>
+      <p id="training-example" class="training-text"></p>
+
+      <div class="training-controls">
+        <button id="training-prev" class="btn secondary">Previous</button>
+        <button id="training-speak" class="btn">Speak</button>
+        <button id="training-next" class="btn">Next</button>
+        <button id="training-remove" class="btn secondary">Remove Star</button>
+        <button id="training-back" class="btn secondary">Back to menu</button>
+      </div>
+
+      <div id="training-status" class="hint"></div>
+    </section>
+  </main>
+
+  <div id="stage-overlay" class="overlay" role="dialog" aria-modal="true" aria-labelledby="stage-title">
+    <div class="modal">
+      <h3 id="stage-title">Stage complete</h3>
+      <p id="stage-points"></p>
+      <p id="total-points"></p>
+      <p id="record-points"></p>
+      <button id="next-stage" class="btn">Next stage</button>
+      <button id="back-home" class="btn secondary">Back to menu</button>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEYS = {
+      bestScore: "cats_words_best_score",
+      dictionary: "cats_words_dictionary"
+    };
+
+    const wordsByLevel = {
+      A1: [
+        { en: "house", de: "das Haus" },
+        { en: "cat", de: "die Katze" },
+        { en: "book", de: "das Buch" },
+        { en: "water", de: "das Wasser" },
+        { en: "sun", de: "die Sonne" },
+        { en: "friend", de: "der Freund" },
+        { en: "apple", de: "der Apfel" },
+        { en: "city", de: "die Stadt" },
+        { en: "school", de: "die Schule" },
+        { en: "window", de: "das Fenster" },
+        { en: "mother", de: "die Mutter" },
+        { en: "father", de: "der Vater" },
+        { en: "dog", de: "der Hund" },
+        { en: "day", de: "der Tag" },
+        { en: "door", de: "die Tuer" }
+      ],
+      A2: [
+        { en: "garden", de: "der Garten" },
+        { en: "kitchen", de: "die Kueche" },
+        { en: "holiday", de: "der Urlaub" },
+        { en: "train station", de: "der Bahnhof" },
+        { en: "breakfast", de: "das Fruehstueck" },
+        { en: "movie", de: "der Film" },
+        { en: "weather", de: "das Wetter" },
+        { en: "country", de: "das Land" },
+        { en: "question", de: "die Frage" },
+        { en: "answer", de: "die Antwort" },
+        { en: "job", de: "der Beruf" },
+        { en: "clothes", de: "die Kleidung" },
+        { en: "weekend", de: "das Wochenende" },
+        { en: "language", de: "die Sprache" },
+        { en: "key", de: "der Schluessel" }
+      ],
+      B1: [
+        { en: "experience", de: "die Erfahrung" },
+        { en: "decision", de: "die Entscheidung" },
+        { en: "opportunity", de: "die Gelegenheit" },
+        { en: "habit", de: "die Gewohnheit" },
+        { en: "relationship", de: "die Beziehung" },
+        { en: "success", de: "der Erfolg" },
+        { en: "future", de: "die Zukunft" },
+        { en: "responsibility", de: "die Verantwortung" },
+        { en: "health", de: "die Gesundheit" },
+        { en: "environment", de: "die Umwelt" },
+        { en: "traffic", de: "der Verkehr" },
+        { en: "education", de: "die Bildung" },
+        { en: "advice", de: "der Rat" },
+        { en: "neighbor", de: "der Nachbar" },
+        { en: "memory", de: "die Erinnerung" }
+      ],
+      B2: [
+        { en: "research", de: "die Forschung" },
+        { en: "progress", de: "der Fortschritt" },
+        { en: "evidence", de: "der Beweis" },
+        { en: "solution", de: "die Loesung" },
+        { en: "challenge", de: "die Herausforderung" },
+        { en: "debate", de: "die Debatte" },
+        { en: "resource", de: "die Ressource" },
+        { en: "benefit", de: "der Vorteil" },
+        { en: "disadvantage", de: "der Nachteil" },
+        { en: "strategy", de: "die Strategie" },
+        { en: "network", de: "das Netzwerk" },
+        { en: "trend", de: "der Trend" },
+        { en: "influence", de: "der Einfluss" },
+        { en: "requirement", de: "die Voraussetzung" },
+        { en: "agreement", de: "die Vereinbarung" }
+      ],
+      C1: [
+        { en: "perception", de: "die Wahrnehmung" },
+        { en: "assumption", de: "die Annahme" },
+        { en: "implication", de: "die Implikation" },
+        { en: "coherence", de: "die Kohaerenz" },
+        { en: "framework", de: "der Rahmen" },
+        { en: "justification", de: "die Rechtfertigung" },
+        { en: "distinction", de: "die Unterscheidung" },
+        { en: "controversy", de: "die Kontroverse" },
+        { en: "perspective", de: "die Perspektive" },
+        { en: "constraint", de: "die Einschraenkung" },
+        { en: "interpretation", de: "die Interpretation" },
+        { en: "inference", de: "die Schlussfolgerung" },
+        { en: "threshold", de: "die Schwelle" },
+        { en: "consensus", de: "der Konsens" },
+        { en: "ambiguity", de: "die Mehrdeutigkeit" }
+      ]
+    };
+
+    const frontScreen = document.getElementById("front-screen");
+    const gameScreen = document.getElementById("game-screen");
+    const trainingScreen = document.getElementById("training-screen");
+
+    const startGameBtn = document.getElementById("start-game");
+    const startTrainingBtn = document.getElementById("start-training");
+    const dictOnlyInput = document.getElementById("dict-only");
+    const frontStatusEl = document.getElementById("front-status");
+    const recordFrontEl = document.getElementById("record-front");
+
+    const englishRoot = document.getElementById("english-cards");
+    const germanRoot = document.getElementById("german-cards");
+    const statusEl = document.getElementById("status");
+
+    const modePill = document.getElementById("mode-pill");
+    const levelPill = document.getElementById("level-pill");
+    const stagePill = document.getElementById("stage-pill");
+    const timerPill = document.getElementById("timer-pill");
+    const totalPill = document.getElementById("total-pill");
+    const recordPill = document.getElementById("record-pill");
+    const gameHomeBtn = document.getElementById("game-home");
+
+    const overlay = document.getElementById("stage-overlay");
+    const stageTitle = document.getElementById("stage-title");
+    const stagePointsEl = document.getElementById("stage-points");
+    const totalPointsEl = document.getElementById("total-points");
+    const recordPointsEl = document.getElementById("record-points");
+    const nextStageBtn = document.getElementById("next-stage");
+    const backHomeBtn = document.getElementById("back-home");
+
+    const trainingCountPill = document.getElementById("training-count-pill");
+    const trainingWordEl = document.getElementById("training-word");
+    const trainingTranslationEl = document.getElementById("training-translation");
+    const trainingDefinitionEl = document.getElementById("training-definition");
+    const trainingExampleEl = document.getElementById("training-example");
+    const trainingStatusEl = document.getElementById("training-status");
+    const trainingPrevBtn = document.getElementById("training-prev");
+    const trainingSpeakBtn = document.getElementById("training-speak");
+    const trainingNextBtn = document.getElementById("training-next");
+    const trainingRemoveBtn = document.getElementById("training-remove");
+    const trainingBackBtn = document.getElementById("training-back");
+
+    let selectedLevel = "A1";
+    let dictionaryOnlyMode = false;
+    let stages = [];
+    let currentStageWordsByKey = {};
+
+    let stageIndex = 0;
+    let stagePoints = 0;
+    let totalPoints = 0;
+    let matchedCount = 0;
+
+    let selectedEnglish = null;
+    let selectedGerman = null;
+    let locked = false;
+
+    let timeLeft = 60;
+    let timerId = null;
+
+    let bestScore = 0;
+    let dictionaryWords = [];
+    let preferredGermanVoice = null;
+
+    let trainingWords = [];
+    let trainingIndex = 0;
+
+    function loadState() {
+      const storedBest = Number(window.localStorage.getItem(STORAGE_KEYS.bestScore));
+      bestScore = Number.isFinite(storedBest) ? storedBest : 0;
+
+      try {
+        const rawDictionary = window.localStorage.getItem(STORAGE_KEYS.dictionary);
+        const parsed = rawDictionary ? JSON.parse(rawDictionary) : [];
+        dictionaryWords = Array.isArray(parsed) ? parsed : [];
+      } catch (error) {
+        dictionaryWords = [];
+      }
+
+      updateBestScoreUI();
+    }
+
+    function persistDictionary() {
+      window.localStorage.setItem(STORAGE_KEYS.dictionary, JSON.stringify(dictionaryWords));
+    }
+
+    function updateBestScoreUI() {
+      recordFrontEl.textContent = `Best score: ${bestScore}`;
+      recordPill.textContent = `Best: ${bestScore}`;
+    }
+
+    function updateBestScoreIfNeeded() {
+      if (totalPoints > bestScore) {
+        bestScore = totalPoints;
+        window.localStorage.setItem(STORAGE_KEYS.bestScore, String(bestScore));
+        updateBestScoreUI();
+      }
+    }
+
+    function shuffle(items) {
+      const arr = [...items];
+      for (let i = arr.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function getAllWords() {
+      return Object.entries(wordsByLevel).flatMap(([level, words]) => words.map((word) => ({ ...word, level })));
+    }
+
+    function isWordStarred(word) {
+      return dictionaryWords.some((entry) => entry.de === word.de);
+    }
+
+    function toggleDictionaryWord(word) {
+      const exists = isWordStarred(word);
+      if (exists) {
+        dictionaryWords = dictionaryWords.filter((entry) => entry.de !== word.de);
+      } else {
+        dictionaryWords.push({ en: word.en, de: word.de, level: word.level || selectedLevel });
+      }
+      persistDictionary();
+      return !exists;
+    }
+
+    function buildStages(sourceWords) {
+      const words = shuffle(sourceWords);
+      const chunks = [];
+
+      for (let i = 0; i < words.length; i += 5) {
+        const part = words.slice(i, i + 5);
+        if (part.length === 5) {
+          chunks.push(part);
+        }
+      }
+
+      return chunks;
+    }
+
+    function getPlayableWords(level, onlyDictionary) {
+      if (onlyDictionary) {
+        return dictionaryWords.map((word) => ({ ...word }));
+      }
+
+      return wordsByLevel[level].map((word) => ({ ...word, level }));
+    }
+
+    function scoreGermanVoice(voice) {
+      const name = (voice.name || "").toLowerCase();
+      let score = 0;
+
+      if (voice.lang && voice.lang.toLowerCase() === "de-de") {
+        score += 40;
+      } else if (voice.lang && voice.lang.toLowerCase().startsWith("de")) {
+        score += 30;
+      }
+
+      if (voice.localService) {
+        score += 8;
+      }
+
+      if (name.includes("premium") || name.includes("enhanced")) {
+        score += 15;
+      }
+      if (name.includes("neural") || name.includes("wavenet")) {
+        score += 25;
+      }
+      if (name.includes("natural")) {
+        score += 12;
+      }
+
+      if (name.includes("siri")) {
+        score += 18;
+      }
+      if (name.includes("google deutsch") || name.includes("microsoft")) {
+        score += 10;
+      }
+
+      return score;
+    }
+
+    function refreshPreferredGermanVoice() {
+      if (!("speechSynthesis" in window)) {
+        preferredGermanVoice = null;
+        return;
+      }
+
+      const voices = window.speechSynthesis.getVoices();
+      const germanVoices = voices.filter((voice) => voice.lang && voice.lang.toLowerCase().startsWith("de"));
+      if (!germanVoices.length) {
+        preferredGermanVoice = null;
+        return;
+      }
+
+      germanVoices.sort((a, b) => scoreGermanVoice(b) - scoreGermanVoice(a));
+      preferredGermanVoice = germanVoices[0];
+    }
+
+    function initSpeech() {
+      if (!("speechSynthesis" in window)) {
+        return;
+      }
+
+      refreshPreferredGermanVoice();
+      window.speechSynthesis.addEventListener("voiceschanged", refreshPreferredGermanVoice);
+    }
+
+    function speakGerman(text) {
+      if (!("speechSynthesis" in window)) {
+        return;
+      }
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "de-DE";
+      if (preferredGermanVoice) {
+        utterance.voice = preferredGermanVoice;
+      }
+      utterance.rate = 0.95;
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function createEnglishCard(item) {
+      const button = document.createElement("button");
+      button.className = "card";
+      button.type = "button";
+      button.textContent = item.en;
+      button.dataset.key = item.en;
+      button.dataset.side = "en";
+      button.addEventListener("click", () => handlePick(button));
+      return button;
+    }
+
+    function createGermanRow(item) {
+      const row = document.createElement("div");
+      row.className = "card-row";
+
+      const card = document.createElement("button");
+      card.className = "card";
+      card.type = "button";
+      card.textContent = item.de;
+      card.dataset.key = item.en;
+      card.dataset.side = "de";
+      card.dataset.wordDe = item.de;
+      card.addEventListener("click", () => {
+        speakGerman(item.de);
+        handlePick(card);
+      });
+
+      const star = document.createElement("button");
+      star.type = "button";
+      star.className = "star-btn";
+      if (isWordStarred(item)) {
+        star.classList.add("on");
+      }
+      star.textContent = "★";
+      star.title = "Add or remove from dictionary";
+      star.addEventListener("click", (event) => {
+        event.stopPropagation();
+        const isNowStarred = toggleDictionaryWord(item);
+        star.classList.toggle("on", isNowStarred);
+        statusEl.textContent = isNowStarred
+          ? `Added to dictionary: ${item.de}`
+          : `Removed from dictionary: ${item.de}`;
+      });
+
+      row.appendChild(card);
+      row.appendChild(star);
+      return row;
+    }
+
+    function clearTimer() {
+      if (timerId) {
+        window.clearInterval(timerId);
+        timerId = null;
+      }
+    }
+
+    function startTimer() {
+      clearTimer();
+      timeLeft = 60;
+      timerPill.textContent = `Time: ${timeLeft}s`;
+
+      timerId = window.setInterval(() => {
+        timeLeft -= 1;
+        timerPill.textContent = `Time: ${timeLeft}s`;
+        if (timeLeft <= 0) {
+          clearTimer();
+          handleTimeExpired();
+        }
+      }, 1000);
+    }
+
+    function renderStage() {
+      const stageWords = stages[stageIndex];
+      const english = stageWords.map((word) => ({ ...word }));
+      const german = stageWords.map((word) => ({ ...word }));
+
+      englishRoot.innerHTML = "";
+      germanRoot.innerHTML = "";
+
+      currentStageWordsByKey = {};
+      stageWords.forEach((word) => {
+        currentStageWordsByKey[word.en] = word;
+      });
+
+      shuffle(english).forEach((item) => {
+        englishRoot.appendChild(createEnglishCard(item));
+      });
+
+      shuffle(german).forEach((item) => {
+        germanRoot.appendChild(createGermanRow(item));
+      });
+
+      selectedEnglish = null;
+      selectedGerman = null;
+      matchedCount = 0;
+      stagePoints = 0;
+      locked = false;
+
+      modePill.textContent = dictionaryOnlyMode ? "Mode: Dictionary" : "Mode: Level";
+      levelPill.textContent = `Level: ${selectedLevel}`;
+      stagePill.textContent = `Stage: ${stageIndex + 1}`;
+      totalPill.textContent = `Total points: ${totalPoints}`;
+      statusEl.textContent = "Choose one English card and one German card. Click ★ to save German words.";
+
+      startTimer();
+    }
+
+    function setMatched(card) {
+      card.classList.remove("selected", "wrong");
+      card.classList.add("matched");
+      card.disabled = true;
+
+      const row = card.closest(".card-row");
+      if (row) {
+        const star = row.querySelector(".star-btn");
+        if (star) {
+          star.disabled = true;
+        }
+      }
+    }
+
+    function clearSelection() {
+      [selectedEnglish, selectedGerman].forEach((card) => {
+        if (card && !card.classList.contains("matched")) {
+          card.classList.remove("selected");
+        }
+      });
+      selectedEnglish = null;
+      selectedGerman = null;
+    }
+
+    function handlePick(card) {
+      if (locked || card.classList.contains("matched")) {
+        return;
+      }
+
+      if (card.dataset.side === "en") {
+        if (selectedEnglish === card) {
+          card.classList.remove("selected");
+          selectedEnglish = null;
+        } else {
+          if (selectedEnglish) {
+            selectedEnglish.classList.remove("selected");
+          }
+          selectedEnglish = card;
+          card.classList.add("selected");
+        }
+      } else {
+        if (selectedGerman === card) {
+          card.classList.remove("selected");
+          selectedGerman = null;
+        } else {
+          if (selectedGerman) {
+            selectedGerman.classList.remove("selected");
+          }
+          selectedGerman = card;
+          card.classList.add("selected");
+        }
+      }
+
+      if (selectedEnglish && selectedGerman) {
+        evaluatePair();
+      }
+    }
+
+    function evaluatePair() {
+      const isMatch = selectedEnglish.dataset.key === selectedGerman.dataset.key;
+
+      if (isMatch) {
+        stagePoints += 1;
+        totalPoints += 1;
+        updateBestScoreIfNeeded();
+
+        setMatched(selectedEnglish);
+        setMatched(selectedGerman);
+        matchedCount += 1;
+
+        statusEl.textContent = "Correct match!";
+        totalPill.textContent = `Total points: ${totalPoints}`;
+        clearSelection();
+
+        if (matchedCount === 5) {
+          finishStage(false);
+        }
+      } else {
+        stagePoints -= 1;
+        totalPoints -= 1;
+        totalPill.textContent = `Total points: ${totalPoints}`;
+        statusEl.textContent = "Wrong pair. Try again.";
+
+        selectedEnglish.classList.add("wrong");
+        selectedGerman.classList.add("wrong");
+        locked = true;
+
+        window.setTimeout(() => {
+          if (selectedEnglish) {
+            selectedEnglish.classList.remove("wrong");
+          }
+          if (selectedGerman) {
+            selectedGerman.classList.remove("wrong");
+          }
+          clearSelection();
+          locked = false;
+        }, 1000);
+      }
+    }
+
+    function handleTimeExpired() {
+      if (overlay.classList.contains("open")) {
+        return;
+      }
+
+      locked = true;
+      clearSelection();
+      statusEl.textContent = "Time is up for this stage.";
+      finishStage(true);
+    }
+
+    function finishStage(timedOut) {
+      clearTimer();
+
+      if (timedOut) {
+        stageTitle.textContent = "Time is up";
+      } else {
+        const isLastStageComplete = stageIndex === stages.length - 1;
+        stageTitle.textContent = isLastStageComplete ? `Level ${selectedLevel} completed` : "Stage complete";
+      }
+
+      stagePointsEl.textContent = `Stage points: ${stagePoints}`;
+      totalPointsEl.textContent = `Total points: ${totalPoints}`;
+      recordPointsEl.textContent = `Best score: ${bestScore}`;
+
+      const isLastStage = stageIndex === stages.length - 1;
+      nextStageBtn.textContent = isLastStage ? "Play again" : "Next stage";
+      overlay.classList.add("open");
+    }
+
+    function startGame(level) {
+      selectedLevel = level;
+      dictionaryOnlyMode = dictOnlyInput.checked;
+
+      const sourceWords = getPlayableWords(level, dictionaryOnlyMode);
+      if (sourceWords.length < 5) {
+        frontStatusEl.textContent = "Need at least 5 starred words in your dictionary for this mode.";
+        return;
+      }
+
+      stages = buildStages(sourceWords);
+      if (!stages.length) {
+        frontStatusEl.textContent = "Not enough words to build stages.";
+        return;
+      }
+
+      frontStatusEl.textContent = "";
+      stageIndex = 0;
+      stagePoints = 0;
+      totalPoints = 0;
+
+      overlay.classList.remove("open");
+      frontScreen.classList.add("hidden");
+      trainingScreen.classList.add("hidden");
+      gameScreen.classList.remove("hidden");
+      renderStage();
+    }
+
+    function backToMenu() {
+      clearTimer();
+      if ("speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+      overlay.classList.remove("open");
+      gameScreen.classList.add("hidden");
+      trainingScreen.classList.add("hidden");
+      frontScreen.classList.remove("hidden");
+      statusEl.textContent = "";
+    }
+
+    function sanitizeNoun(word) {
+      return word.replace(/^(der|die|das)\s+/i, "").trim();
+    }
+
+    function buildTrainingContent(word) {
+      const noun = sanitizeNoun(word.de);
+      const definition = `Das Wort \"${word.de}\" ist ein Nomen. Es bedeutet auf Englisch \"${word.en}\" und wird oft in Alltagssituationen benutzt.`;
+      const example = `Im Kontext: Ich sehe ${word.de.toLowerCase()} und spreche darueber, weil ${noun.toLowerCase()} hier wichtig ist.`;
+
+      return { definition, example };
+    }
+
+    function renderTrainingWord() {
+      if (!trainingWords.length) {
+        trainingWordEl.textContent = "No starred words yet";
+        trainingTranslationEl.textContent = "Add words with ★ in game mode first.";
+        trainingDefinitionEl.textContent = "";
+        trainingExampleEl.textContent = "";
+        trainingStatusEl.textContent = "";
+        trainingCountPill.textContent = "Words: 0";
+        trainingPrevBtn.disabled = true;
+        trainingNextBtn.disabled = true;
+        trainingSpeakBtn.disabled = true;
+        trainingRemoveBtn.disabled = true;
+        return;
+      }
+
+      const word = trainingWords[trainingIndex];
+      const content = buildTrainingContent(word);
+
+      trainingWordEl.textContent = word.de;
+      trainingTranslationEl.textContent = `English: ${word.en} | Level: ${word.level || "-"}`;
+      trainingDefinitionEl.textContent = content.definition;
+      trainingExampleEl.textContent = content.example;
+      trainingStatusEl.textContent = `Word ${trainingIndex + 1} of ${trainingWords.length}`;
+      trainingCountPill.textContent = `Words: ${trainingWords.length}`;
+
+      trainingPrevBtn.disabled = false;
+      trainingNextBtn.disabled = false;
+      trainingSpeakBtn.disabled = false;
+      trainingRemoveBtn.disabled = false;
+    }
+
+    function openDictionaryTraining() {
+      trainingWords = shuffle(dictionaryWords.map((word) => ({ ...word })));
+      trainingIndex = 0;
+
+      frontStatusEl.textContent = "";
+      frontScreen.classList.add("hidden");
+      gameScreen.classList.add("hidden");
+      trainingScreen.classList.remove("hidden");
+
+      renderTrainingWord();
+    }
+
+    startGameBtn.addEventListener("click", () => {
+      const picked = document.querySelector('input[name="difficulty"]:checked');
+      startGame(picked ? picked.value : "A1");
+    });
+
+    startTrainingBtn.addEventListener("click", () => {
+      openDictionaryTraining();
+    });
+
+    nextStageBtn.addEventListener("click", () => {
+      overlay.classList.remove("open");
+      if (stageIndex === stages.length - 1) {
+        stages = buildStages(getPlayableWords(selectedLevel, dictionaryOnlyMode));
+        stageIndex = 0;
+        totalPoints = 0;
+      } else {
+        stageIndex += 1;
+      }
+      renderStage();
+    });
+
+    backHomeBtn.addEventListener("click", () => {
+      backToMenu();
+    });
+
+    gameHomeBtn.addEventListener("click", () => {
+      backToMenu();
+    });
+
+    trainingPrevBtn.addEventListener("click", () => {
+      if (!trainingWords.length) {
+        return;
+      }
+      trainingIndex = (trainingIndex - 1 + trainingWords.length) % trainingWords.length;
+      renderTrainingWord();
+    });
+
+    trainingNextBtn.addEventListener("click", () => {
+      if (!trainingWords.length) {
+        return;
+      }
+      trainingIndex = (trainingIndex + 1) % trainingWords.length;
+      renderTrainingWord();
+    });
+
+    trainingSpeakBtn.addEventListener("click", () => {
+      if (!trainingWords.length) {
+        return;
+      }
+      speakGerman(trainingWords[trainingIndex].de);
+    });
+
+    trainingRemoveBtn.addEventListener("click", () => {
+      if (!trainingWords.length) {
+        return;
+      }
+
+      const current = trainingWords[trainingIndex];
+      dictionaryWords = dictionaryWords.filter((entry) => entry.de !== current.de);
+      persistDictionary();
+      trainingWords = trainingWords.filter((entry) => entry.de !== current.de);
+
+      if (trainingIndex >= trainingWords.length) {
+        trainingIndex = Math.max(0, trainingWords.length - 1);
+      }
+
+      renderTrainingWord();
+    });
+
+    trainingBackBtn.addEventListener("click", () => {
+      backToMenu();
+    });
+
+    loadState();
+    initSpeech();
+  </script>
+</body>
+</html>
