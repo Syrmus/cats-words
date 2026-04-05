@@ -6,18 +6,18 @@
   <title>Cat's Words</title>
   <style>
     :root {
-      --bg-1: #fff8ed;
-      --bg-2: #e9f8f5;
+      --bg-1: #f0f4ff;
+      --bg-2: #fdf6ed;
       --card: #ffffff;
-      --ink: #1f2a37;
-      --accent: #1f8a70;
-      --accent-soft: #d7f0e8;
-      --wrong: #c0392b;
-      --wrong-soft: #ffd8d4;
-      --matched: #7d8b99;
-      --muted: #5f6f7f;
+      --ink: #0f172a;
+      --accent: #0f62fe;
+      --accent-soft: #d8e7ff;
+      --wrong: #b91c1c;
+      --wrong-soft: #fee2e2;
+      --matched: #64748b;
+      --muted: #334155;
       --star: #f4b400;
-      --shadow: 0 10px 25px rgba(31, 42, 55, 0.12);
+      --shadow: 0 14px 30px rgba(15, 23, 42, 0.16);
     }
 
     * {
@@ -41,11 +41,12 @@
 
     .screen {
       width: min(980px, 100%);
-      background: rgba(255, 255, 255, 0.88);
+      background: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(4px);
       border-radius: 20px;
       box-shadow: var(--shadow);
       padding: 20px;
+      position: relative;
     }
 
     .hidden {
@@ -57,11 +58,164 @@
       padding: 24px 16px;
     }
 
+    .auth {
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .auth-grid {
+      display: grid;
+      gap: 14px;
+      text-align: left;
+    }
+
+    .auth-row {
+      display: grid;
+      gap: 8px;
+    }
+
+    .auth-row label {
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .auth-input {
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 1rem;
+      color: #0f172a;
+      background: #fff;
+    }
+
+    .auth-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    .leaderboard-list {
+      margin: 8px 0 0;
+      padding-left: 20px;
+      color: #1e293b;
+      font-weight: 700;
+      line-height: 1.6;
+    }
+
     .cat-logo {
       width: 72px;
       height: 72px;
       margin: 0 auto 10px;
       display: block;
+      object-fit: contain;
+    }
+
+    .front-logo {
+      width: 83px;
+      height: 83px;
+    }
+
+    .front-brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      margin-bottom: 12px;
+    }
+
+    .front-brand .front-logo {
+      width: 83px;
+      height: 83px;
+      margin: 0;
+      flex: 0 0 auto;
+    }
+
+    .front-brand .wordmark {
+      width: auto;
+      height: 158px;
+      margin: 0;
+      flex: 0 1 auto;
+      max-width: min(760px, 84vw);
+    }
+
+    .wordmark {
+      width: min(340px, 82vw);
+      height: auto;
+      margin: 0 auto 12px;
+      display: block;
+      object-fit: contain;
+    }
+
+    .corner-logo {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      width: 52px;
+      height: 52px;
+      margin: 0;
+      z-index: 2;
+    }
+
+    .with-corner-logo .header {
+      padding-left: 210px;
+      min-height: 56px;
+    }
+
+    main.with-corner-logo {
+      padding-top: 86px;
+    }
+
+    .home-brand-btn {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: none;
+      background: transparent;
+      padding: 4px 6px;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+
+    .home-brand-btn:hover {
+      background: rgba(15, 23, 42, 0.06);
+    }
+
+    .home-brand-btn .cat-logo {
+      width: 44px;
+      height: 44px;
+      margin: 0;
+    }
+
+    .home-brand-btn .wordmark {
+      width: 148px;
+      margin: 0;
+    }
+
+    .logout-icon {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      background: #fff;
+      color: #334155;
+      font-size: 1rem;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .logout-icon:hover {
+      background: #f8fafc;
+      color: #0f172a;
     }
 
     .front h1 {
@@ -85,10 +239,10 @@
     }
 
     .panel {
-      border: 1px solid #dde5ec;
+      border: 1px solid #c7d4e2;
       border-radius: 14px;
       padding: 14px;
-      background: #ffffff;
+      background: #f8fbff;
     }
 
     .panel h2 {
@@ -125,7 +279,35 @@
     .level-option input:checked + span {
       border-color: var(--accent);
       background: var(--accent-soft);
-      color: #0f5f4b;
+      color: #08368d;
+    }
+
+    .pairs {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .pair-option input {
+      display: none;
+    }
+
+    .pair-option span {
+      display: block;
+      text-align: center;
+      padding: 10px;
+      border-radius: 10px;
+      border: 2px solid #d3deea;
+      background: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.15s ease;
+    }
+
+    .pair-option input:checked + span {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      color: #08368d;
     }
 
     .check {
@@ -156,7 +338,7 @@
     }
 
     .btn.secondary {
-      background: #5c6b78;
+      background: #334155;
     }
 
     .btn:hover {
@@ -200,7 +382,7 @@
 
     .pill {
       background: #fff;
-      border: 1px solid #d9e1e7;
+      border: 1px solid #cbd5e1;
       border-radius: 999px;
       padding: 6px 12px;
       font-size: 0.92rem;
@@ -218,6 +400,7 @@
       border: 1px solid #e2e8ee;
       border-radius: 14px;
       padding: 12px;
+      min-width: 0;
     }
 
     .column h2 {
@@ -240,6 +423,10 @@
       align-items: center;
     }
 
+    .card-row.no-star {
+      grid-template-columns: 1fr;
+    }
+
     .card {
       border: 2px solid transparent;
       background: var(--card);
@@ -253,6 +440,107 @@
       transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
       cursor: pointer;
       width: 100%;
+    }
+
+    .card-text {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      min-width: 0;
+    }
+
+    .card-text-main {
+      min-width: 0;
+    }
+
+    .inline-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.9rem;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: 0.02em;
+      color: #fff;
+      white-space: nowrap;
+    }
+
+    .article-der {
+      background: #1d5ea8;
+    }
+
+    .article-die {
+      background: #ad2968;
+    }
+
+    .article-das {
+      background: #9b6a05;
+    }
+
+    .prep-auf {
+      background: #3a7c12;
+    }
+
+    .prep-mit {
+      background: #4f46b8;
+    }
+
+    .prep-an {
+      background: #165da8;
+    }
+
+    .prep-ueber {
+      background: #9f4317;
+    }
+
+    .prep-bei {
+      background: #455a64;
+    }
+
+    .prep-fuer {
+      background: #a86b05;
+    }
+
+    .prep-aus {
+      background: #525252;
+    }
+
+    .prep-um {
+      background: #ad2968;
+    }
+
+    .prep-zu {
+      background: #5a5a5a;
+    }
+
+    .prep-nach {
+      background: #7c4a03;
+    }
+
+    .prep-von {
+      background: #0d766e;
+    }
+
+    .prep-als {
+      background: #3f3f46;
+    }
+
+    .case-akk {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .case-dat {
+      background: #dbeafe;
+      color: #1d4ed8;
+    }
+
+    .case-nom {
+      background: #ede9fe;
+      color: #6d28d9;
     }
 
     .card:hover:not(:disabled) {
@@ -306,6 +594,29 @@
       min-height: 24px;
       font-weight: 600;
       color: #37506a;
+    }
+
+    .context-box {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid #dbe4ec;
+      background: #f7fbff;
+      min-height: 48px;
+      line-height: 1.35;
+    }
+
+    .context-main {
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: #172b46;
+    }
+
+    .context-translation {
+      margin-top: 6px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #475569;
     }
 
     .overlay {
@@ -385,36 +696,128 @@
         grid-template-columns: 1fr 1fr;
       }
 
-      .board {
+      .pairs {
         grid-template-columns: 1fr;
       }
 
       .column h2 {
         text-align: center;
       }
+
+      .card {
+        font-size: 0.95rem;
+        padding: 12px 10px;
+      }
+
+      .corner-logo {
+        top: 12px;
+        left: 12px;
+        width: 44px;
+        height: 44px;
+      }
+
+      .with-corner-logo .header {
+        padding-left: 0;
+        margin-top: 56px;
+      }
+
+      main.with-corner-logo {
+        padding-top: 72px;
+      }
+
+      .home-brand-btn {
+        top: 8px;
+        left: 8px;
+        padding: 3px 5px;
+      }
+
+      .home-brand-btn .cat-logo {
+        width: 36px;
+        height: 36px;
+      }
+
+      .home-brand-btn .wordmark {
+        width: 118px;
+      }
+
+      .logout-icon {
+        top: 10px;
+        right: 10px;
+        width: 30px;
+        height: 30px;
+      }
+
+      .front-brand {
+        gap: 2px;
+      }
+
+      .front-brand .front-logo {
+        width: 64px;
+        height: 64px;
+      }
+
+      .front-brand .wordmark {
+        height: 118px;
+        max-width: 84vw;
+      }
     }
   </style>
 </head>
 <body>
-  <section id="front-screen" class="screen front">
-    <svg class="cat-logo" viewBox="0 0 120 120" aria-hidden="true">
-      <path d="M25 35 L40 15 L52 40" fill="#f5b27a"></path>
-      <path d="M95 35 L80 15 L68 40" fill="#f5b27a"></path>
-      <circle cx="60" cy="60" r="35" fill="#ffd4a3"></circle>
-      <circle cx="46" cy="58" r="4" fill="#1f2a37"></circle>
-      <circle cx="74" cy="58" r="4" fill="#1f2a37"></circle>
-      <ellipse cx="60" cy="70" rx="6" ry="4" fill="#e88b7c"></ellipse>
-      <path d="M54 74 Q60 80 66 74" stroke="#1f2a37" stroke-width="3" fill="none" stroke-linecap="round"></path>
-      <path d="M22 65 H45" stroke="#b17845" stroke-width="3" stroke-linecap="round"></path>
-      <path d="M22 73 H45" stroke="#b17845" stroke-width="3" stroke-linecap="round"></path>
-      <path d="M75 65 H98" stroke="#b17845" stroke-width="3" stroke-linecap="round"></path>
-      <path d="M75 73 H98" stroke="#b17845" stroke-width="3" stroke-linecap="round"></path>
-    </svg>
+  <section id="auth-screen" class="screen front auth with-corner-logo">
+    <img class="cat-logo corner-logo" src="assets/cat-logo.png" alt="Cat logo" />
+    <img class="wordmark" src="assets/cats-words-wordmark.png" alt="Cat's Words" />
+    <p>Create account or sign in to save progress and join leaderboard.</p>
 
-    <h1>Cat's Words</h1>
-    <p>Match English and German cards, build your own dictionary, and train context.</p>
+    <div class="auth-grid">
+      <div class="panel">
+        <div class="auth-row">
+          <label for="auth-username">Username</label>
+          <input id="auth-username" class="auth-input" type="text" autocomplete="username" />
+        </div>
+        <div class="auth-row">
+          <label for="auth-password">Password</label>
+          <input id="auth-password" class="auth-input" type="password" autocomplete="current-password" />
+        </div>
+        <label class="check">
+          <input id="remember-me" type="checkbox" />
+          Remember me
+        </label>
+        <div class="auth-actions">
+          <button id="login-btn" class="btn">Log in</button>
+          <button id="register-btn" class="btn secondary">Register</button>
+        </div>
+        <div id="auth-status" class="hint"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="front-screen" class="screen front">
+    <div class="front-brand">
+      <img class="cat-logo front-logo" src="assets/cat-logo.png" alt="Cat logo" />
+      <img class="wordmark" src="assets/cats-words-wordmark.png" alt="Cat's Words" />
+    </div>
+    <p>Match language cards, build your own dictionary, and train context.</p>
 
     <div class="front-grid">
+      <div class="panel">
+        <h2>Language Pair</h2>
+        <div class="pairs">
+          <label class="pair-option">
+            <input type="radio" name="pair" value="EN-DE" checked>
+            <span>English -> German</span>
+          </label>
+          <label class="pair-option">
+            <input type="radio" name="pair" value="RU-EN">
+            <span>Russian -> English</span>
+          </label>
+          <label class="pair-option">
+            <input type="radio" name="pair" value="RU-DE">
+            <span>Russian -> German</span>
+          </label>
+        </div>
+      </div>
+
       <div class="panel">
         <h2>Choose Difficulty</h2>
         <div class="levels">
@@ -449,18 +852,35 @@
       <div class="panel">
         <h2>Modes</h2>
         <div class="front-actions">
-          <button id="start-game" class="btn">Start Game</button>
+          <button id="start-game" class="btn">Start Mixed Game</button>
+          <button id="start-verb-game" class="btn secondary">Verb + Preposition</button>
           <button id="start-training" class="btn secondary">Dictionary Training</button>
         </div>
+        <div class="front-actions">
+          <button id="logout-front" class="logout-icon" title="Log out" aria-label="Log out">⎋</button>
+        </div>
+        <div id="account-front" class="hint">Signed in as: -</div>
         <div id="front-status" class="hint"></div>
         <div class="hint" id="record-front">Best score: 0</div>
+      </div>
+
+      <div class="panel">
+        <h2>Leaderboard Top 5</h2>
+        <ol id="leaderboard-list" class="leaderboard-list">
+          <li>No data yet</li>
+        </ol>
       </div>
     </div>
   </section>
 
-  <main id="game-screen" class="screen hidden">
+  <main id="game-screen" class="screen hidden with-corner-logo">
+    <button class="home-brand-btn" type="button" data-home="true" title="Home" aria-label="Home">
+      <img class="cat-logo" src="assets/cat-logo.png" alt="" />
+      <img class="wordmark" src="assets/cats-words-wordmark.png" alt="Cat's Words" />
+    </button>
+    <button id="logout-game" class="logout-icon" title="Log out" aria-label="Log out">⎋</button>
     <div class="header">
-      <h1 class="title">Cat's Words: English <-> German</h1>
+      <h1 class="title">Match Cards</h1>
       <div class="header-actions">
         <div class="stats">
           <div class="pill" id="mode-pill">Mode: Level</div>
@@ -470,25 +890,33 @@
           <div class="pill" id="total-pill">Total points: 0</div>
           <div class="pill" id="record-pill">Best: 0</div>
         </div>
-        <button id="game-home" class="btn secondary">Home</button>
       </div>
     </div>
 
     <section class="board">
       <div class="column">
-        <h2>English</h2>
+        <h2 id="left-heading">English</h2>
         <div id="english-cards" class="cards"></div>
       </div>
       <div class="column">
-        <h2>German</h2>
+        <h2 id="right-heading">German</h2>
         <div id="german-cards" class="cards"></div>
       </div>
     </section>
 
     <div id="status" class="status"></div>
+    <div id="context-box" class="context-box">
+      <div id="context-main" class="context-main">Context example will appear here after a correct match.</div>
+      <div id="context-translation" class="context-translation">Translation will appear on a separate line.</div>
+    </div>
   </main>
 
-  <main id="training-screen" class="screen hidden">
+  <main id="training-screen" class="screen hidden with-corner-logo">
+    <button class="home-brand-btn" type="button" data-home="true" title="Home" aria-label="Home">
+      <img class="cat-logo" src="assets/cat-logo.png" alt="" />
+      <img class="wordmark" src="assets/cats-words-wordmark.png" alt="Cat's Words" />
+    </button>
+    <button id="logout-training" class="logout-icon" title="Log out" aria-label="Log out">⎋</button>
     <div class="header">
       <h1 class="title">Dictionary Training</h1>
       <div class="stats">
@@ -500,10 +928,10 @@
       <h2 id="training-word" class="training-word">No words yet</h2>
       <p id="training-translation" class="training-translation"></p>
 
-      <h3 class="training-label">Definition (DE)</h3>
+      <h3 id="training-definition-label" class="training-label">Definition (DE)</h3>
       <p id="training-definition" class="training-text"></p>
 
-      <h3 class="training-label">Example (DE)</h3>
+      <h3 id="training-example-label" class="training-label">Example (DE)</h3>
       <p id="training-example" class="training-text"></p>
 
       <div class="training-controls">
@@ -511,7 +939,6 @@
         <button id="training-speak" class="btn">Speak</button>
         <button id="training-next" class="btn">Next</button>
         <button id="training-remove" class="btn secondary">Remove Star</button>
-        <button id="training-back" class="btn secondary">Back to menu</button>
       </div>
 
       <div id="training-status" class="hint"></div>
@@ -531,111 +958,847 @@
 
   <script>
     const STORAGE_KEYS = {
-      bestScore: "cats_words_best_score",
-      dictionary: "cats_words_dictionary"
+      users: "cats_words_users",
+      session: "cats_words_session",
+      sessionTemp: "cats_words_session_temp"
     };
 
     const wordsByLevel = {
       A1: [
-        { en: "house", de: "das Haus" },
-        { en: "cat", de: "die Katze" },
-        { en: "book", de: "das Buch" },
-        { en: "water", de: "das Wasser" },
-        { en: "sun", de: "die Sonne" },
-        { en: "friend", de: "der Freund" },
-        { en: "apple", de: "der Apfel" },
-        { en: "city", de: "die Stadt" },
-        { en: "school", de: "die Schule" },
-        { en: "window", de: "das Fenster" },
-        { en: "mother", de: "die Mutter" },
-        { en: "father", de: "der Vater" },
-        { en: "dog", de: "der Hund" },
-        { en: "day", de: "der Tag" },
-        { en: "door", de: "die Tuer" }
+        { en: "house", de: "das Haus" }, { en: "cat", de: "die Katze" }, { en: "dog", de: "der Hund" }, { en: "book", de: "das Buch" }, { en: "water", de: "das Wasser" },
+        { en: "sun", de: "die Sonne" }, { en: "friend", de: "der Freund" }, { en: "apple", de: "der Apfel" }, { en: "city", de: "die Stadt" }, { en: "school", de: "die Schule" },
+        { en: "window", de: "das Fenster" }, { en: "mother", de: "die Mutter" }, { en: "father", de: "der Vater" }, { en: "day", de: "der Tag" }, { en: "door", de: "die Tür" },
+        { en: "table", de: "der Tisch" }, { en: "chair", de: "der Stuhl" }, { en: "bed", de: "das Bett" }, { en: "car", de: "das Auto" }, { en: "bicycle", de: "das Fahrrad" },
+        { en: "train", de: "der Zug" }, { en: "bus", de: "der Bus" }, { en: "street", de: "die Straße" }, { en: "tree", de: "der Baum" }, { en: "flower", de: "die Blume" },
+        { en: "bread", de: "das Brot" }, { en: "milk", de: "die Milch" }, { en: "cheese", de: "der Käse" }, { en: "fish", de: "der Fisch" }, { en: "meat", de: "das Fleisch" },
+        { en: "egg", de: "das Ei" }, { en: "coffee", de: "der Kaffee" }, { en: "tea", de: "der Tee" }, { en: "juice", de: "der Saft" }, { en: "phone", de: "das Telefon" },
+        { en: "computer", de: "der Computer" }, { en: "bag", de: "die Tasche" }, { en: "shoe", de: "der Schuh" }, { en: "shirt", de: "das Hemd" }, { en: "jacket", de: "die Jacke" },
+        { en: "hat", de: "der Hut" }, { en: "hand", de: "die Hand" }, { en: "head", de: "der Kopf" }, { en: "eye", de: "das Auge" }, { en: "ear", de: "das Ohr" },
+        { en: "nose", de: "die Nase" }, { en: "mouth", de: "der Mund" }, { en: "child", de: "das Kind" }, { en: "brother", de: "der Bruder" }, { en: "sister", de: "die Schwester" },
+        { en: "family", de: "die Familie" }, { en: "room", de: "das Zimmer" }, { en: "kitchen", de: "die Küche" }, { en: "bathroom", de: "das Bad" }, { en: "garden", de: "der Garten" },
+        { en: "park", de: "der Park" }, { en: "river", de: "der Fluss" }, { en: "mountain", de: "der Berg" }, { en: "beach", de: "der Strand" }, { en: "country", de: "das Land" },
+        { en: "language", de: "die Sprache" }, { en: "music", de: "die Musik" }, { en: "picture", de: "das Bild" }, { en: "movie", de: "der Film" }, { en: "game", de: "das Spiel" },
+        { en: "letter", de: "der Brief" }, { en: "question", de: "die Frage" }, { en: "answer", de: "die Antwort" }, { en: "key", de: "der Schlüssel" }, { en: "bottle", de: "die Flasche" },
+        { en: "cup", de: "die Tasse" }, { en: "plate", de: "der Teller" }, { en: "spoon", de: "der Löffel" }, { en: "fork", de: "die Gabel" }, { en: "knife", de: "das Messer" },
+        { en: "clock", de: "die Uhr" }, { en: "paper", de: "das Papier" }, { en: "pen", de: "der Stift" }, { en: "pencil", de: "der Bleistift" }, { en: "map", de: "die Karte" },
+        { en: "shop", de: "das Geschäft" }, { en: "market", de: "der Markt" }, { en: "hospital", de: "das Krankenhaus" }, { en: "doctor", de: "der Arzt" }, { en: "teacher", de: "der Lehrer" },
+        { en: "student", de: "der Student" }, { en: "neighbor", de: "der Nachbar" }, { en: "office", de: "das Büro" }, { en: "weather", de: "das Wetter" }, { en: "rain", de: "der Regen" },
+        { en: "snow", de: "der Schnee" }, { en: "wind", de: "der Wind" }, { en: "summer", de: "der Sommer" }, { en: "winter", de: "der Winter" }, { en: "spring", de: "der Frühling" },
+        { en: "autumn", de: "der Herbst" }, { en: "night", de: "die Nacht" }, { en: "morning", de: "der Morgen" }, { en: "evening", de: "der Abend" }, { en: "weekend", de: "das Wochenende" }
       ],
       A2: [
-        { en: "garden", de: "der Garten" },
-        { en: "kitchen", de: "die Kueche" },
-        { en: "holiday", de: "der Urlaub" },
-        { en: "train station", de: "der Bahnhof" },
-        { en: "breakfast", de: "das Fruehstueck" },
-        { en: "movie", de: "der Film" },
-        { en: "weather", de: "das Wetter" },
-        { en: "country", de: "das Land" },
-        { en: "question", de: "die Frage" },
-        { en: "answer", de: "die Antwort" },
-        { en: "job", de: "der Beruf" },
-        { en: "clothes", de: "die Kleidung" },
-        { en: "weekend", de: "das Wochenende" },
-        { en: "language", de: "die Sprache" },
-        { en: "key", de: "der Schluessel" }
+        { en: "apartment", de: "die Wohnung" }, { en: "balcony", de: "der Balkon" }, { en: "corridor", de: "der Flur" }, { en: "elevator", de: "der Aufzug" }, { en: "neighborhood", de: "die Nachbarschaft" },
+        { en: "village", de: "das Dorf" }, { en: "capital", de: "die Hauptstadt" }, { en: "station", de: "der Bahnhof" }, { en: "airport", de: "der Flughafen" }, { en: "ticket", de: "das Ticket" },
+        { en: "suitcase", de: "der Koffer" }, { en: "passport", de: "der Reisepass" }, { en: "journey", de: "die Reise" }, { en: "trip", de: "der Ausflug" }, { en: "hotel", de: "das Hotel" },
+        { en: "reservation", de: "die Reservierung" }, { en: "tourist", de: "der Tourist" }, { en: "museum", de: "das Museum" }, { en: "bridge", de: "die Brücke" }, { en: "square", de: "der Platz" },
+        { en: "traffic light", de: "die Ampel" }, { en: "crosswalk", de: "der Zebrastreifen" }, { en: "baker", de: "der Bäcker" }, { en: "butcher", de: "der Metzger" }, { en: "pharmacy", de: "die Apotheke" },
+        { en: "medicine", de: "die Medizin" }, { en: "tooth", de: "der Zahn" }, { en: "dentist", de: "der Zahnarzt" }, { en: "appointment", de: "der Termin" }, { en: "recipe", de: "das Rezept" },
+        { en: "soup", de: "die Suppe" }, { en: "salad", de: "der Salat" }, { en: "rice", de: "der Reis" }, { en: "pasta", de: "die Nudeln" }, { en: "potato", de: "die Kartoffel" },
+        { en: "tomato", de: "die Tomate" }, { en: "onion", de: "die Zwiebel" }, { en: "salt", de: "das Salz" }, { en: "pepper", de: "der Pfeffer" }, { en: "sugar", de: "der Zucker" },
+        { en: "breakfast", de: "das Frühstück" }, { en: "lunch", de: "das Mittagessen" }, { en: "dinner", de: "das Abendessen" }, { en: "bill", de: "die Rechnung" }, { en: "waiter", de: "der Kellner" },
+        { en: "menu", de: "die Speisekarte" }, { en: "price", de: "der Preis" }, { en: "discount", de: "der Rabatt" }, { en: "size", de: "die Größe" }, { en: "color", de: "die Farbe" },
+        { en: "fashion", de: "die Mode" }, { en: "customer", de: "der Kunde" }, { en: "cash", de: "das Bargeld" }, { en: "card", de: "die Karte" }, { en: "account", de: "das Konto" },
+        { en: "bank", de: "die Bank" }, { en: "post office", de: "die Post" }, { en: "parcel", de: "das Paket" }, { en: "stamp", de: "die Briefmarke" }, { en: "email", de: "die E-Mail" },
+        { en: "message", de: "die Nachricht" }, { en: "meeting", de: "das Treffen" }, { en: "hobby", de: "das Hobby" }, { en: "sport", de: "der Sport" }, { en: "team", de: "das Team" },
+        { en: "training", de: "das Training" }, { en: "match", de: "das Spiel" }, { en: "concert", de: "das Konzert" }, { en: "instrument", de: "das Instrument" }, { en: "newspaper", de: "die Zeitung" },
+        { en: "magazine", de: "die Zeitschrift" }, { en: "article", de: "der Artikel" }, { en: "photo", de: "das Foto" }, { en: "holiday", de: "der Urlaub" }, { en: "island", de: "die Insel" },
+        { en: "forest", de: "der Wald" }, { en: "lake", de: "der See" }, { en: "cloud", de: "die Wolke" }, { en: "storm", de: "der Sturm" }, { en: "temperature", de: "die Temperatur" },
+        { en: "calendar", de: "der Kalender" }, { en: "plan", de: "der Plan" }, { en: "goal", de: "das Ziel" }, { en: "course", de: "der Kurs" }, { en: "exam", de: "die Prüfung" },
+        { en: "grade", de: "die Note" }, { en: "mistake", de: "der Fehler" }, { en: "rule", de: "die Regel" }, { en: "example", de: "das Beispiel" }, { en: "project", de: "das Projekt" },
+        { en: "colleague", de: "der Kollege" }, { en: "boss", de: "der Chef" }, { en: "profession", de: "der Beruf" }, { en: "salary", de: "das Gehalt" }, { en: "career", de: "die Karriere" },
+        { en: "neighborhood festival", de: "das Nachbarschaftsfest" }, { en: "city map", de: "der Stadtplan" }, { en: "bus stop", de: "die Haltestelle" }, { en: "playground", de: "der Spielplatz" }, { en: "language school", de: "die Sprachschule" }
       ],
       B1: [
-        { en: "experience", de: "die Erfahrung" },
-        { en: "decision", de: "die Entscheidung" },
-        { en: "opportunity", de: "die Gelegenheit" },
-        { en: "habit", de: "die Gewohnheit" },
-        { en: "relationship", de: "die Beziehung" },
-        { en: "success", de: "der Erfolg" },
-        { en: "future", de: "die Zukunft" },
-        { en: "responsibility", de: "die Verantwortung" },
-        { en: "health", de: "die Gesundheit" },
-        { en: "environment", de: "die Umwelt" },
-        { en: "traffic", de: "der Verkehr" },
-        { en: "education", de: "die Bildung" },
-        { en: "advice", de: "der Rat" },
-        { en: "neighbor", de: "der Nachbar" },
-        { en: "memory", de: "die Erinnerung" }
+        { en: "experience", de: "die Erfahrung" }, { en: "decision", de: "die Entscheidung" }, { en: "opportunity", de: "die Gelegenheit" }, { en: "habit", de: "die Gewohnheit" }, { en: "relationship", de: "die Beziehung" },
+        { en: "success", de: "der Erfolg" }, { en: "future", de: "die Zukunft" }, { en: "responsibility", de: "die Verantwortung" }, { en: "health", de: "die Gesundheit" }, { en: "environment", de: "die Umwelt" },
+        { en: "traffic", de: "der Verkehr" }, { en: "education", de: "die Bildung" }, { en: "advice", de: "der Rat" }, { en: "memory", de: "die Erinnerung" }, { en: "ability", de: "die Fähigkeit" },
+        { en: "effort", de: "die Anstrengung" }, { en: "advantage", de: "der Vorteil" }, { en: "disadvantage", de: "der Nachteil" }, { en: "reason", de: "der Grund" }, { en: "result", de: "das Ergebnis" },
+        { en: "comparison", de: "der Vergleich" }, { en: "difference", de: "der Unterschied" }, { en: "similarity", de: "die Ähnlichkeit" }, { en: "expectation", de: "die Erwartung" }, { en: "fear", de: "die Angst" },
+        { en: "hope", de: "die Hoffnung" }, { en: "dream", de: "der Traum" }, { en: "plan", de: "der Plan" }, { en: "goal", de: "das Ziel" }, { en: "challenge", de: "die Herausforderung" },
+        { en: "solution", de: "die Lösung" }, { en: "problem", de: "das Problem" }, { en: "conflict", de: "der Konflikt" }, { en: "compromise", de: "der Kompromiss" }, { en: "support", de: "die Unterstützung" },
+        { en: "respect", de: "der Respekt" }, { en: "trust", de: "das Vertrauen" }, { en: "patience", de: "die Geduld" }, { en: "stress", de: "der Stress" }, { en: "balance", de: "das Gleichgewicht" },
+        { en: "lifestyle", de: "der Lebensstil" }, { en: "diet", de: "die Ernährung" }, { en: "exercise", de: "die Bewegung" }, { en: "sleep", de: "der Schlaf" }, { en: "habit change", de: "die Veränderung" },
+        { en: "society", de: "die Gesellschaft" }, { en: "community", de: "die Gemeinschaft" }, { en: "culture", de: "die Kultur" }, { en: "tradition", de: "die Tradition" }, { en: "festival", de: "das Fest" },
+        { en: "custom", de: "der Brauch" }, { en: "religion", de: "die Religion" }, { en: "history", de: "die Geschichte" }, { en: "generation", de: "die Generation" }, { en: "childhood", de: "die Kindheit" },
+        { en: "adulthood", de: "das Erwachsenenalter" }, { en: "citizen", de: "der Bürger" }, { en: "right", de: "das Recht" }, { en: "law", de: "das Gesetz" }, { en: "duty", de: "die Pflicht" },
+        { en: "service", de: "der Dienst" }, { en: "volunteer", de: "der Freiwillige" }, { en: "donation", de: "die Spende" }, { en: "charity", de: "die Wohltätigkeit" }, { en: "media", de: "die Medien" },
+        { en: "report", de: "der Bericht" }, { en: "headline", de: "die Schlagzeile" }, { en: "interview", de: "das Interview" }, { en: "opinion", de: "die Meinung" }, { en: "argument", de: "das Argument" },
+        { en: "discussion", de: "die Diskussion" }, { en: "debate", de: "die Debatte" }, { en: "point of view", de: "der Standpunkt" }, { en: "evidence", de: "der Beleg" }, { en: "fact", de: "die Tatsache" },
+        { en: "development", de: "die Entwicklung" }, { en: "progress", de: "der Fortschritt" }, { en: "technology", de: "die Technologie" }, { en: "device", de: "das Gerät" }, { en: "software", de: "die Software" },
+        { en: "internet", de: "das Internet" }, { en: "privacy", de: "die Privatsphäre" }, { en: "security", de: "die Sicherheit" }, { en: "risk", de: "das Risiko" }, { en: "benefit", de: "der Nutzen" },
+        { en: "industry", de: "die Industrie" }, { en: "economy", de: "die Wirtschaft" }, { en: "market", de: "der Markt" }, { en: "employment", de: "die Beschäftigung" }, { en: "unemployment", de: "die Arbeitslosigkeit" },
+        { en: "income", de: "das Einkommen" }, { en: "expense", de: "die Ausgabe" }, { en: "budget", de: "das Budget" }, { en: "saving", de: "die Ersparnis" }, { en: "investment", de: "die Investition" },
+        { en: "career path", de: "der Karriereweg" }, { en: "qualification", de: "die Qualifikation" }, { en: "application", de: "die Bewerbung" }, { en: "interview process", de: "das Vorstellungsgespräch" }, { en: "promotion", de: "die Beförderung" }
       ],
       B2: [
-        { en: "research", de: "die Forschung" },
-        { en: "progress", de: "der Fortschritt" },
-        { en: "evidence", de: "der Beweis" },
-        { en: "solution", de: "die Loesung" },
-        { en: "challenge", de: "die Herausforderung" },
-        { en: "debate", de: "die Debatte" },
-        { en: "resource", de: "die Ressource" },
-        { en: "benefit", de: "der Vorteil" },
-        { en: "disadvantage", de: "der Nachteil" },
-        { en: "strategy", de: "die Strategie" },
-        { en: "network", de: "das Netzwerk" },
-        { en: "trend", de: "der Trend" },
-        { en: "influence", de: "der Einfluss" },
-        { en: "requirement", de: "die Voraussetzung" },
-        { en: "agreement", de: "die Vereinbarung" }
+        { en: "research", de: "die Forschung" }, { en: "analysis", de: "die Analyse" }, { en: "method", de: "die Methode" }, { en: "data", de: "die Daten" }, { en: "hypothesis", de: "die Hypothese" },
+        { en: "evidence", de: "der Beweis" }, { en: "finding", de: "der Befund" }, { en: "conclusion", de: "die Schlussfolgerung" }, { en: "context", de: "der Kontext" }, { en: "criterion", de: "das Kriterium" },
+        { en: "indicator", de: "der Indikator" }, { en: "factor", de: "der Faktor" }, { en: "variable", de: "die Variable" }, { en: "trend", de: "der Trend" }, { en: "pattern", de: "das Muster" },
+        { en: "correlation", de: "die Korrelation" }, { en: "cause", de: "die Ursache" }, { en: "effect", de: "die Wirkung" }, { en: "impact", de: "die Auswirkung" }, { en: "consequence", de: "die Folge" },
+        { en: "strategy", de: "die Strategie" }, { en: "approach", de: "der Ansatz" }, { en: "framework", de: "der Rahmen" }, { en: "model", de: "das Modell" }, { en: "scenario", de: "das Szenario" },
+        { en: "requirement", de: "die Voraussetzung" }, { en: "constraint", de: "die Einschränkung" }, { en: "resource", de: "die Ressource" }, { en: "capacity", de: "die Kapazität" }, { en: "efficiency", de: "die Effizienz" },
+        { en: "productivity", de: "die Produktivität" }, { en: "quality", de: "die Qualität" }, { en: "standard", de: "der Standard" }, { en: "benchmark", de: "der Richtwert" }, { en: "implementation", de: "die Umsetzung" },
+        { en: "execution", de: "die Ausführung" }, { en: "outcome", de: "das Resultat" }, { en: "objective", de: "das Ziel" }, { en: "priority", de: "die Priorität" }, { en: "deadline", de: "die Frist" },
+        { en: "negotiation", de: "die Verhandlung" }, { en: "agreement", de: "die Vereinbarung" }, { en: "contract", de: "der Vertrag" }, { en: "clause", de: "die Klausel" }, { en: "obligation", de: "die Verpflichtung" },
+        { en: "compliance", de: "die Einhaltung" }, { en: "regulation", de: "die Vorschrift" }, { en: "policy", de: "die Richtlinie" }, { en: "governance", de: "die Steuerung" }, { en: "accountability", de: "die Rechenschaft" },
+        { en: "stakeholder", de: "der Beteiligte" }, { en: "partnership", de: "die Partnerschaft" }, { en: "collaboration", de: "die Zusammenarbeit" }, { en: "coordination", de: "die Koordination" }, { en: "communication", de: "die Kommunikation" },
+        { en: "feedback", de: "das Feedback" }, { en: "evaluation", de: "die Bewertung" }, { en: "assessment", de: "die Beurteilung" }, { en: "review", de: "die Überprüfung" }, { en: "monitoring", de: "die Überwachung" },
+        { en: "risk", de: "das Risiko" }, { en: "threat", de: "die Bedrohung" }, { en: "opportunity", de: "die Chance" }, { en: "advantage", de: "der Vorteil" }, { en: "disadvantage", de: "der Nachteil" },
+        { en: "innovation", de: "die Innovation" }, { en: "invention", de: "die Erfindung" }, { en: "adoption", de: "die Übernahme" }, { en: "transition", de: "der Übergang" }, { en: "transformation", de: "die Transformation" },
+        { en: "sustainability", de: "die Nachhaltigkeit" }, { en: "emission", de: "die Emission" }, { en: "consumption", de: "der Verbrauch" }, { en: "supply", de: "die Versorgung" }, { en: "demand", de: "die Nachfrage" },
+        { en: "competition", de: "der Wettbewerb" }, { en: "enterprise", de: "das Unternehmen" }, { en: "startup", de: "das Start-up" }, { en: "corporation", de: "der Konzern" }, { en: "department", de: "die Abteilung" },
+        { en: "leadership", de: "die Führung" }, { en: "management", de: "das Management" }, { en: "expertise", de: "die Fachkenntnis" }, { en: "specialization", de: "die Spezialisierung" }, { en: "competence", de: "die Kompetenz" },
+        { en: "qualification", de: "die Qualifikation" }, { en: "performance", de: "die Leistung" }, { en: "motivation", de: "die Motivation" }, { en: "commitment", de: "das Engagement" }, { en: "satisfaction", de: "die Zufriedenheit" },
+        { en: "conflict resolution", de: "die Konfliktlösung" }, { en: "mediation", de: "die Mediation" }, { en: "consensus", de: "der Konsens" }, { en: "disagreement", de: "die Meinungsverschiedenheit" }, { en: "compromise", de: "der Kompromiss" },
+        { en: "credibility", de: "die Glaubwürdigkeit" }, { en: "reputation", de: "der Ruf" }, { en: "transparency", de: "die Transparenz" }, { en: "integrity", de: "die Integrität" }, { en: "reliability", de: "die Zuverlässigkeit" }
       ],
       C1: [
-        { en: "perception", de: "die Wahrnehmung" },
-        { en: "assumption", de: "die Annahme" },
-        { en: "implication", de: "die Implikation" },
-        { en: "coherence", de: "die Kohaerenz" },
-        { en: "framework", de: "der Rahmen" },
-        { en: "justification", de: "die Rechtfertigung" },
-        { en: "distinction", de: "die Unterscheidung" },
-        { en: "controversy", de: "die Kontroverse" },
-        { en: "perspective", de: "die Perspektive" },
-        { en: "constraint", de: "die Einschraenkung" },
-        { en: "interpretation", de: "die Interpretation" },
-        { en: "inference", de: "die Schlussfolgerung" },
-        { en: "threshold", de: "die Schwelle" },
-        { en: "consensus", de: "der Konsens" },
-        { en: "ambiguity", de: "die Mehrdeutigkeit" }
+        { en: "perception", de: "die Wahrnehmung" }, { en: "assumption", de: "die Annahme" }, { en: "implication", de: "die Implikation" }, { en: "coherence", de: "die Kohärenz" }, { en: "ambiguity", de: "die Mehrdeutigkeit" },
+        { en: "nuance", de: "die Nuance" }, { en: "distinction", de: "die Unterscheidung" }, { en: "interpretation", de: "die Interpretation" }, { en: "inference", de: "die Schlussfolgerung" }, { en: "premise", de: "die Prämisse" },
+        { en: "argumentation", de: "die Argumentation" }, { en: "reasoning", de: "die Begründung" }, { en: "justification", de: "die Rechtfertigung" }, { en: "consistency", de: "die Konsistenz" }, { en: "contradiction", de: "der Widerspruch" },
+        { en: "paradox", de: "das Paradox" }, { en: "controversy", de: "die Kontroverse" }, { en: "dilemma", de: "das Dilemma" }, { en: "complexity", de: "die Komplexität" }, { en: "interdependence", de: "die Interdependenz" },
+        { en: "framework", de: "der Rahmen" }, { en: "paradigm", de: "das Paradigma" }, { en: "discourse", de: "der Diskurs" }, { en: "narrative", de: "das Narrativ" }, { en: "rhetoric", de: "die Rhetorik" },
+        { en: "perspective", de: "die Perspektive" }, { en: "mindset", de: "die Denkweise" }, { en: "attitude", de: "die Haltung" }, { en: "stance", de: "der Standpunkt" }, { en: "bias", de: "die Voreingenommenheit" },
+        { en: "prejudice", de: "das Vorurteil" }, { en: "stereotype", de: "das Stereotyp" }, { en: "identity", de: "die Identität" }, { en: "diversity", de: "die Vielfalt" }, { en: "inclusion", de: "die Inklusion" },
+        { en: "equity", de: "die Gerechtigkeit" }, { en: "ethics", de: "die Ethik" }, { en: "morality", de: "die Moral" }, { en: "responsibility", de: "die Verantwortlichkeit" }, { en: "legitimacy", de: "die Legitimitat" },
+        { en: "sovereignty", de: "die Souveränität" }, { en: "jurisdiction", de: "die Zuständigkeit" }, { en: "constitution", de: "die Verfassung" }, { en: "regulation", de: "die Regulierung" }, { en: "compliance", de: "die Konformität" },
+        { en: "accountability", de: "die Rechenschaftspflicht" }, { en: "governance", de: "die Governance" }, { en: "institution", de: "die Institution" }, { en: "bureaucracy", de: "die Bürokratie" }, { en: "administration", de: "die Verwaltung" },
+        { en: "implementation", de: "die Implementierung" }, { en: "feasibility", de: "die Machbarkeit" }, { en: "viability", de: "die Tragfähigkeit" }, { en: "robustness", de: "die Robustheit" }, { en: "resilience", de: "die Resilienz" },
+        { en: "vulnerability", de: "die Verwundbarkeit" }, { en: "uncertainty", de: "die Unsicherheit" }, { en: "probability", de: "die Wahrscheinlichkeit" }, { en: "threshold", de: "die Schwelle" }, { en: "sensitivity", de: "die Sensitivität" },
+        { en: "precision", de: "die Präzision" }, { en: "accuracy", de: "die Genauigkeit" }, { en: "validity", de: "die Validität" }, { en: "reliability", de: "die Reliabilität" }, { en: "replicability", de: "die Replizierbarkeit" },
+        { en: "methodology", de: "die Methodologie" }, { en: "synthesis", de: "die Synthese" }, { en: "evaluation", de: "die Evaluation" }, { en: "optimization", de: "die Optimierung" }, { en: "prioritization", de: "die Priorisierung" },
+        { en: "allocation", de: "die Allokation" }, { en: "distribution", de: "die Verteilung" }, { en: "scarcity", de: "die Knappheit" }, { en: "abundance", de: "die Fülle" }, { en: "efficiency", de: "die Effizienz" },
+        { en: "productivity", de: "die Produktivität" }, { en: "prosperity", de: "der Wohlstand" }, { en: "inequality", de: "die Ungleichheit" }, { en: "deprivation", de: "die Entbehrung" }, { en: "volatility", de: "die Volatilität" },
+        { en: "stability", de: "die Stabilität" }, { en: "transformation", de: "die Umgestaltung" }, { en: "adaptation", de: "die Anpassung" }, { en: "innovation", de: "die Neuerung" }, { en: "disruption", de: "die Disruption" },
+        { en: "sustainability", de: "die Nachhaltigkeit" }, { en: "externality", de: "die Externalität" }, { en: "intervention", de: "die Intervention" }, { en: "moderation", de: "die Moderation" }, { en: "facilitation", de: "die Facilitation" },
+        { en: "collaboration", de: "die Kollaboration" }, { en: "negotiation", de: "die Verhandlung" }, { en: "mediation", de: "die Vermittlung" }, { en: "consensus", de: "der Konsens" }, { en: "plurality", de: "die Pluralität" },
+        { en: "cohesion", de: "der Zusammenhalt" }, { en: "fragmentation", de: "die Fragmentierung" }, { en: "polarization", de: "die Polarisierung" }, { en: "reconciliation", de: "die Versöhnung" }, { en: "legacy", de: "das Vermächtnis" }
       ]
     };
 
+    const PAIRS = {
+      "EN-DE": { id: "EN-DE", leftLang: "en", rightLang: "de", leftLabel: "English", rightLabel: "German" },
+      "RU-EN": { id: "RU-EN", leftLang: "ru", rightLang: "en", leftLabel: "Russian", rightLabel: "English" },
+      "RU-DE": { id: "RU-DE", leftLang: "ru", rightLang: "de", leftLabel: "Russian", rightLabel: "German" }
+    };
+
+    const GAME_MODES = {
+      MIXED: "mixed",
+      VERB: "verb"
+    };
+
+    const VERB_PREPOSITION_WORDS = [
+      { verb: "achten", preposition: "auf", grammaticalCase: "Akk", example: "Achte auf deine Gesundheit." },
+      { verb: "anfangen", preposition: "mit", grammaticalCase: "Dat", example: "Wann fängst du mit der Arbeit an?" },
+      { verb: "antworten", preposition: "auf", grammaticalCase: "Akk", example: "Er hat auf meine Frage nicht geantwortet." },
+      { verb: "arbeiten", preposition: "an", grammaticalCase: "Dat", example: "Sie arbeitet an einem neuen Projekt." },
+      { verb: "sich ärgern", preposition: "über", grammaticalCase: "Akk", example: "Ich ärgere mich über den Stau." },
+      { verb: "aufhören", preposition: "mit", grammaticalCase: "Dat", example: "Hör endlich mit dem Rauchen auf!" },
+      { verb: "sich bedanken", preposition: "bei", grammaticalCase: "Dat", example: "Ich bedanke mich bei meiner Kollegin." },
+      { verb: "sich bedanken", preposition: "für", grammaticalCase: "Akk", example: "Ich bedanke mich für das Geschenk." },
+      { verb: "beginnen", preposition: "mit", grammaticalCase: "Dat", example: "Wir beginnen mit der Präsentation." },
+      { verb: "sich beschäftigen", preposition: "mit", grammaticalCase: "Dat", example: "Er beschäftigt sich mit Philosophie." },
+      { verb: "bestehen", preposition: "aus", grammaticalCase: "Dat", example: "Das Team besteht aus zehn Personen." },
+      { verb: "bitten", preposition: "um", grammaticalCase: "Akk", example: "Ich bitte dich um Hilfe." },
+      { verb: "denken", preposition: "an", grammaticalCase: "Akk", example: "Ich denke oft an dich." },
+      { verb: "diskutieren", preposition: "über", grammaticalCase: "Akk", example: "Wir diskutieren über Politik." },
+      { verb: "einladen", preposition: "zu", grammaticalCase: "Dat", example: "Ich lade dich zu meiner Party ein." },
+      { verb: "sich entscheiden", preposition: "für", grammaticalCase: "Akk", example: "Sie hat sich für das rote Kleid entschieden." },
+      { verb: "sich erinnern", preposition: "an", grammaticalCase: "Akk", example: "Ich erinnere mich gern an den Urlaub." },
+      { verb: "erkennen", preposition: "an", grammaticalCase: "Dat", example: "Man erkennt ihn an seiner Stimme." },
+      { verb: "fragen", preposition: "nach", grammaticalCase: "Dat", example: "Er fragte nach dem Weg." },
+      { verb: "sich freuen", preposition: "auf", grammaticalCase: "Akk", example: "Ich freue mich auf den Urlaub." },
+      { verb: "sich freuen", preposition: "über", grammaticalCase: "Akk", example: "Sie freut sich über das Lob." },
+      { verb: "gehören", preposition: "zu", grammaticalCase: "Dat", example: "Das gehört zu meinen Aufgaben." },
+      { verb: "gelten", preposition: "als", grammaticalCase: "Nom", example: "Berlin gilt als eine kreative Stadt." },
+      { verb: "sich gewöhnen", preposition: "an", grammaticalCase: "Akk", example: "Ich gewöhne mich an das Klima." },
+      { verb: "glauben", preposition: "an", grammaticalCase: "Akk", example: "Er glaubt an seine Chance." },
+      { verb: "handeln", preposition: "von", grammaticalCase: "Dat", example: "Der Film handelt von einer wahren Geschichte." },
+      { verb: "helfen", preposition: "bei", grammaticalCase: "Dat", example: "Kannst du mir beim Umzug helfen?" },
+      { verb: "hoffen", preposition: "auf", grammaticalCase: "Akk", example: "Wir hoffen auf besseres Wetter." },
+      { verb: "sich informieren", preposition: "über", grammaticalCase: "Akk", example: "Ich informiere mich über die Lage." },
+      { verb: "sich interessieren", preposition: "für", grammaticalCase: "Akk", example: "Er interessiert sich für Autos." },
+      { verb: "kämpfen", preposition: "für", grammaticalCase: "Akk", example: "Sie kämpft für ihre Überzeugungen." },
+      { verb: "klagen", preposition: "über", grammaticalCase: "Akk", example: "Er klagt über Rückenschmerzen." },
+      { verb: "sich kümmern", preposition: "um", grammaticalCase: "Akk", example: "Sie kümmert sich um die Kinder." },
+      { verb: "lachen", preposition: "über", grammaticalCase: "Akk", example: "Wir lachen über seinen Witz." },
+      { verb: "leiden", preposition: "an", grammaticalCase: "Dat", example: "Er leidet an Schlaflosigkeit." },
+      { verb: "nachdenken", preposition: "über", grammaticalCase: "Akk", example: "Ich denke über das Angebot nach." },
+      { verb: "rechnen", preposition: "mit", grammaticalCase: "Dat", example: "Rechne nicht mit einer schnellen Lösung." },
+      { verb: "reden", preposition: "über", grammaticalCase: "Akk", example: "Wir müssen darüber reden." },
+      { verb: "schreiben", preposition: "an", grammaticalCase: "Akk", example: "Ich schreibe gerade an einem Brief." },
+      { verb: "sich sorgen", preposition: "um", grammaticalCase: "Akk", example: "Ich mache mir Sorgen um ihn." },
+      { verb: "sprechen", preposition: "mit", grammaticalCase: "Dat", example: "Ich spreche mit meinem Chef." },
+      { verb: "sprechen", preposition: "über", grammaticalCase: "Akk", example: "Wir sprechen über das Projekt." },
+      { verb: "streiten", preposition: "um", grammaticalCase: "Akk", example: "Sie streiten um Geld." },
+      { verb: "teilnehmen", preposition: "an", grammaticalCase: "Dat", example: "Ich nehme an der Konferenz teil." },
+      { verb: "träumen", preposition: "von", grammaticalCase: "Dat", example: "Sie träumt von einer Weltreise." },
+      { verb: "vertrauen", preposition: "auf", grammaticalCase: "Akk", example: "Ich vertraue auf dein Urteil." },
+      { verb: "verzichten", preposition: "auf", grammaticalCase: "Akk", example: "Er verzichtet auf Alkohol." },
+      { verb: "warten", preposition: "auf", grammaticalCase: "Akk", example: "Ich warte auf den Bus." },
+      { verb: "zweifeln", preposition: "an", grammaticalCase: "Dat", example: "Er zweifelt an seiner Entscheidung." },
+      { verb: "zugehören", preposition: "zu", grammaticalCase: "Dat", example: "Er gehört zur Mannschaft." }
+    ];
+
+    const RU_BY_EN = {
+      house: "дом", cat: "кошка", dog: "собака", book: "книга", water: "вода", sun: "солнце", friend: "друг", apple: "яблоко", city: "город", school: "школа",
+      window: "окно", mother: "мать", father: "отец", day: "день", door: "дверь", table: "стол", chair: "стул", bed: "кровать", car: "машина", bicycle: "велосипед",
+      train: "поезд", bus: "автобус", street: "улица", tree: "дерево", flower: "цветок", bread: "хлеб", milk: "молоко", cheese: "сыр", fish: "рыба", meat: "мясо",
+      egg: "яйцо", coffee: "кофе", tea: "чай", juice: "сок", phone: "телефон", computer: "компьютер", bag: "сумка", shoe: "обувь", shirt: "рубашка", jacket: "куртка",
+      hat: "шляпа", hand: "рука", head: "голова", eye: "глаз", ear: "ухо", nose: "нос", mouth: "рот", child: "ребенок", brother: "брат", sister: "сестра",
+      family: "семья", room: "комната", kitchen: "кухня", bathroom: "ванная", garden: "сад", park: "парк", river: "река", mountain: "гора", beach: "пляж", country: "страна",
+      language: "язык", music: "музыка", picture: "картинка", movie: "фильм", game: "игра", letter: "письмо", question: "вопрос", answer: "ответ", key: "ключ", bottle: "бутылка",
+      cup: "чашка", plate: "тарелка", spoon: "ложка", fork: "вилка", knife: "нож", clock: "часы", paper: "бумага", pen: "ручка", pencil: "карандаш", map: "карта",
+      shop: "магазин", market: "рынок", hospital: "больница", doctor: "врач", teacher: "учитель", student: "студент", neighbor: "сосед", office: "офис", weather: "погода", rain: "дождь",
+      snow: "снег", wind: "ветер", summer: "лето", winter: "зима", spring: "весна", autumn: "осень", night: "ночь", morning: "утро", evening: "вечер", weekend: "выходные",
+      apartment: "квартира", balcony: "балкон", village: "деревня", station: "станция", airport: "аэропорт", ticket: "билет", suitcase: "чемодан", passport: "паспорт", journey: "путешествие", trip: "поездка",
+      hotel: "отель", tourist: "турист", museum: "музей", bridge: "мост", square: "площадь", pharmacy: "аптека", medicine: "лекарство", dentist: "стоматолог", appointment: "встреча", recipe: "рецепт",
+      soup: "суп", salad: "салат", rice: "рис", pasta: "паста", potato: "картофель", tomato: "помидор", onion: "лук", salt: "соль", pepper: "перец", sugar: "сахар",
+      breakfast: "завтрак", lunch: "обед", dinner: "ужин", bill: "счет", waiter: "официант", menu: "меню", price: "цена", size: "размер", color: "цвет", customer: "клиент",
+      bank: "банк", parcel: "посылка", message: "сообщение", meeting: "встреча", hobby: "хобби", sport: "спорт", team: "команда", concert: "концерт", instrument: "инструмент", holiday: "отпуск",
+      forest: "лес", lake: "озеро", cloud: "облако", storm: "шторм", temperature: "температура", calendar: "календарь", plan: "план", goal: "цель", course: "курс", exam: "экзамен",
+      grade: "оценка", mistake: "ошибка", rule: "правило", example: "пример", project: "проект", colleague: "коллега", boss: "начальник", profession: "профессия", salary: "зарплата", career: "карьера",
+      "conflict resolution": "решение конфликта"
+    };
+
+    const SPECIFIC_CONTEXTS = {
+      child: {
+        de: "Im Kindergarten spielt das {WORD} mit den anderen Kindern im Hof.",
+        en: "At kindergarten, the {WORD} plays with other kids in the yard.",
+        ru: "В детском саду {RU_WORD} играет с другими детьми во дворе."
+      },
+      constraint: {
+        de: "Die {WORD} im Budget zwingt das Team, Funktionen zu priorisieren.",
+        en: "The budget {WORD} forces the team to prioritize features.",
+        ru: "{RU_WORD} по бюджету заставляет команду расставлять приоритеты в функциях."
+      },
+      implementation: {
+        de: "{WORD} ist im Migrationsplan in drei Phasen vorgesehen.",
+        en: "{WORD} is scheduled in three phases in the migration plan.",
+        ru: "В плане миграции {RU_WORD} предусмотрено в три этапа."
+      },
+      strategy: {
+        de: "Unsere {WORD} konzentriert sich auf den Ausbau des Online-Vertriebs.",
+        en: "Our {WORD} focuses on expanding online sales.",
+        ru: "Наша {RU_WORD} сосредоточена на развитии онлайн-продаж."
+      },
+      requirement: {
+        de: "Diese {WORD} steht direkt im Vertrag mit dem Kunden.",
+        en: "This {WORD} is written directly in the client contract.",
+        ru: "Это {RU_WORD} напрямую указано в договоре с клиентом."
+      },
+      resource: {
+        de: "Ohne zusätzliche {WORD} kann das Team den Termin nicht halten.",
+        en: "Without additional {WORD}, the team cannot meet the deadline.",
+        ru: "Без дополнительных {RU_WORD} команда не успеет к сроку."
+      },
+      capacity: {
+        de: "Die aktuelle {WORD} reicht nur für zwei weitere Projekte.",
+        en: "The current {WORD} is enough for only two more projects.",
+        ru: "Текущей {RU_WORD} хватит только на два следующих проекта."
+      },
+      efficiency: {
+        de: "Durch Automatisierung steigt die {WORD} im Support deutlich.",
+        en: "Automation significantly increases support {WORD}.",
+        ru: "Автоматизация заметно повышает {RU_WORD} в поддержке."
+      },
+      productivity: {
+        de: "Im Homeoffice misst die Firma die {WORD} pro Sprint.",
+        en: "In remote work, the company tracks {WORD} per sprint.",
+        ru: "При удаленной работе компания измеряет {RU_WORD} по каждому спринту."
+      },
+      quality: {
+        de: "Die {WORD} der Daten ist für den Bericht entscheidend.",
+        en: "The data {WORD} is critical for the report.",
+        ru: "{RU_WORD} данных критически важна для отчета."
+      },
+      benchmark: {
+        de: "Als {WORD} nutzen wir die Zahlen vom letzten Quartal.",
+        en: "We use last quarter’s numbers as a {WORD}.",
+        ru: "В качестве {RU_WORD} мы берем показатели прошлого квартала."
+      },
+      outcome: {
+        de: "Das {WORD} der Verhandlung war für beide Seiten positiv.",
+        en: "The {WORD} of the negotiation was positive for both sides.",
+        ru: "{RU_WORD} переговоров было позитивным для обеих сторон."
+      },
+      objective: {
+        de: "Unser wichtigstes {WORD} ist die Senkung der Fehlerquote.",
+        en: "Our main {WORD} is reducing the error rate.",
+        ru: "Наша главная {RU_WORD} — снизить долю ошибок."
+      },
+      priority: {
+        de: "Die Sicherheit hat in diesem Release höchste {WORD}.",
+        en: "Security has the highest {WORD} in this release.",
+        ru: "Безопасность имеет высшую {RU_WORD} в этом релизе."
+      },
+      deadline: {
+        de: "Die {WORD} fuer die Abgabe ist der 15. Mai.",
+        en: "The submission {WORD} is May 15.",
+        ru: "{RU_WORD} сдачи — 15 мая."
+      },
+      agreement: {
+        de: "Die {WORD} wurde nach drei Runden final unterschrieben.",
+        en: "The {WORD} was signed after three negotiation rounds.",
+        ru: "{RU_WORD} подписали после трех раундов переговоров."
+      },
+      contract: {
+        de: "Der {WORD} enthält eine klare Klausel zur Haftung.",
+        en: "The {WORD} includes a clear liability clause.",
+        ru: "В {RU_WORD} есть четкий пункт об ответственности."
+      },
+      obligation: {
+        de: "Diese {WORD} gilt fuer alle Partner im Netzwerk.",
+        en: "This {WORD} applies to all partners in the network.",
+        ru: "Это {RU_WORD} действует для всех партнеров сети."
+      },
+      compliance: {
+        de: "Die {WORD} mit Datenschutzregeln wird monatlich geprüft.",
+        en: "{WORD} with privacy rules is reviewed monthly.",
+        ru: "{RU_WORD} с правилами приватности проверяется каждый месяц."
+      },
+      regulation: {
+        de: "Die neue {WORD} betrifft alle Finanzdienstleister.",
+        en: "The new {WORD} affects all financial service providers.",
+        ru: "Новое {RU_WORD} касается всех финансовых провайдеров."
+      },
+      policy: {
+        de: "Unsere interne {WORD} verbietet private USB-Geräte.",
+        en: "Our internal {WORD} forbids personal USB devices.",
+        ru: "Наша внутренняя {RU_WORD} запрещает личные USB-устройства."
+      },
+      governance: {
+        de: "Klare {WORD} verhindert Konflikte zwischen Teams.",
+        en: "Clear {WORD} prevents conflicts between teams.",
+        ru: "Четкая {RU_WORD} предотвращает конфликты между командами."
+      },
+      accountability: {
+        de: "Ohne {WORD} werden Risiken im Projekt zu spät sichtbar.",
+        en: "Without {WORD}, project risks become visible too late.",
+        ru: "Без {RU_WORD} риски проекта становятся заметны слишком поздно."
+      },
+      stakeholder: {
+        de: "Jeder {WORD} bekommt ein eigenes Status-Update pro Woche.",
+        en: "Each {WORD} receives a dedicated weekly status update.",
+        ru: "Каждый {RU_WORD} получает отдельный еженедельный статус-апдейт."
+      },
+      partnership: {
+        de: "Die {WORD} mit der Uni bringt Zugang zu Laboren.",
+        en: "The {WORD} with the university gives access to labs.",
+        ru: "{RU_WORD} с университетом дает доступ к лабораториям."
+      },
+      collaboration: {
+        de: "Durch enge {WORD} löst das Team komplexe Bugs schneller.",
+        en: "Through close {WORD}, the team resolves complex bugs faster.",
+        ru: "Благодаря тесной {RU_WORD} команда быстрее решает сложные баги."
+      },
+      coordination: {
+        de: "Bei dieser Kampagne ist {WORD} zwischen Vertrieb und Marketing entscheidend.",
+        en: "In this campaign, {WORD} between sales and marketing is crucial.",
+        ru: "В этой кампании {RU_WORD} между продажами и маркетингом критична."
+      },
+      communication: {
+        de: "Transparente {WORD} reduziert Missverständnisse im Team.",
+        en: "Transparent {WORD} reduces team misunderstandings.",
+        ru: "Прозрачная {RU_WORD} снижает недопонимание в команде."
+      },
+      evaluation: {
+        de: "Die {WORD} des Piloten zeigt eine deutliche Zeitersparnis.",
+        en: "The pilot {WORD} shows significant time savings.",
+        ru: "{RU_WORD} пилота показывает заметную экономию времени."
+      },
+      assessment: {
+        de: "Vor dem Start machen wir eine technische {WORD}.",
+        en: "Before launch, we conduct a technical {WORD}.",
+        ru: "Перед запуском мы проводим техническую {RU_WORD}."
+      },
+      review: {
+        de: "Im Code-{WORD} wurden drei kritische Punkte gefunden.",
+        en: "In the code {WORD}, three critical issues were found.",
+        ru: "Во время code-{RU_WORD} нашли три критические проблемы."
+      },
+      monitoring: {
+        de: "Mit ständigem {WORD} sehen wir Ausfälle sofort.",
+        en: "With continuous {WORD}, we see outages immediately.",
+        ru: "При постоянном {RU_WORD} мы сразу видим сбои."
+      },
+      risk: {
+        de: "Das größte {WORD} ist aktuell die Abhängigkeit von einem Anbieter.",
+        en: "The biggest {WORD} right now is dependency on one vendor.",
+        ru: "Самый большой {RU_WORD} сейчас — зависимость от одного поставщика."
+      },
+      threat: {
+        de: "Diese Sicherheitslücke ist eine reale {WORD} fuer Kundendaten.",
+        en: "This vulnerability is a real {WORD} to customer data.",
+        ru: "Эта уязвимость — реальная {RU_WORD} для данных клиентов."
+      },
+      innovation: {
+        de: "Die {WORD} im Produkt liegt im neuen Suchalgorithmus.",
+        en: "The product {WORD} lies in the new search algorithm.",
+        ru: "{RU_WORD} продукта — в новом алгоритме поиска."
+      },
+      transition: {
+        de: "Die {WORD} zur Cloud dauert laut Plan drei Monate.",
+        en: "The cloud {WORD} is planned to take three months.",
+        ru: "{RU_WORD} в облако по плану займет три месяца."
+      },
+      transformation: {
+        de: "Die digitale {WORD} verändert das ganze Geschäftsmodell.",
+        en: "Digital {WORD} changes the entire business model.",
+        ru: "Цифровая {RU_WORD} меняет всю бизнес-модель."
+      },
+      sustainability: {
+        de: "{WORD} ist ein zentrales Kriterium bei neuen Lieferanten.",
+        en: "{WORD} is a key criterion when selecting new suppliers.",
+        ru: "{RU_WORD} — ключевой критерий при выборе новых поставщиков."
+      },
+      emission: {
+        de: "Die {WORD} der Anlage wurde im letzten Jahr halbiert.",
+        en: "The plant’s {WORD} was cut in half last year.",
+        ru: "{RU_WORD} установки в прошлом году сократили вдвое."
+      },
+      consumption: {
+        de: "Der {WORD} von Strom sinkt durch neue Sensorik.",
+        en: "{WORD} of electricity drops due to new sensors.",
+        ru: "{RU_WORD} электроэнергии падает благодаря новым датчикам."
+      },
+      demand: {
+        de: "Die {WORD} nach diesem Kurs ist seit Januar stark gestiegen.",
+        en: "{WORD} for this course has risen sharply since January.",
+        ru: "{RU_WORD} на этот курс заметно вырос с января."
+      },
+      competition: {
+        de: "Die {WORD} im Markt zwingt uns zu schnelleren Releases.",
+        en: "Market {WORD} forces us to release faster.",
+        ru: "{RU_WORD} на рынке заставляет нас выпускать релизы быстрее."
+      },
+      leadership: {
+        de: "Gute {WORD} zeigt sich besonders in Krisensituationen.",
+        en: "Strong {WORD} is most visible during crises.",
+        ru: "Сильное {RU_WORD} особенно заметно в кризисе."
+      },
+      management: {
+        de: "Effektives {WORD} reduziert Leerlauf in der Produktion.",
+        en: "Effective {WORD} reduces idle time in production.",
+        ru: "Эффективное {RU_WORD} снижает простои в производстве."
+      },
+      expertise: {
+        de: "Ihre {WORD} in Kryptographie war fuer das Audit entscheidend.",
+        en: "Her {WORD} in cryptography was crucial for the audit.",
+        ru: "Ее {RU_WORD} в криптографии была критична для аудита."
+      },
+      competence: {
+        de: "Die technische {WORD} des Teams wächst mit jedem Sprint.",
+        en: "The team’s technical {WORD} grows with each sprint.",
+        ru: "Техническая {RU_WORD} команды растет с каждым спринтом."
+      },
+      motivation: {
+        de: "Hohe {WORD} hilft dem Team in langen Release-Wochen.",
+        en: "High {WORD} helps the team during long release weeks.",
+        ru: "Высокая {RU_WORD} помогает команде в длинные релизные недели."
+      },
+      satisfaction: {
+        de: "Die Kundenzufriedenheit stieg nach dem UX-Redesign deutlich.",
+        en: "Customer {WORD} increased significantly after the UX redesign.",
+        ru: "Клиентская {RU_WORD} заметно выросла после редизайна UX."
+      },
+      consensus: {
+        de: "Nach langer Diskussion erreichte das Team einen klaren {WORD}.",
+        en: "After a long discussion, the team reached clear {WORD}.",
+        ru: "После долгой дискуссии команда пришла к четкому {RU_WORD}."
+      },
+      credibility: {
+        de: "Ohne Quellen verliert der Bericht schnell an {WORD}.",
+        en: "Without sources, the report quickly loses {WORD}.",
+        ru: "Без источников отчет быстро теряет {RU_WORD}."
+      },
+      reputation: {
+        de: "Ein Datenleck kann die {WORD} einer Marke langfristig schädigen.",
+        en: "A data leak can damage a brand’s {WORD} long-term.",
+        ru: "Утечка данных может надолго повредить {RU_WORD} бренда."
+      },
+      transparency: {
+        de: "Mehr {WORD} in Entscheidungen stärkt das Vertrauen der Mitarbeiter.",
+        en: "More decision-making {WORD} strengthens employee trust.",
+        ru: "Большая {RU_WORD} в решениях укрепляет доверие сотрудников."
+      },
+      reliability: {
+        de: "Die {WORD} des Dienstes liegt konstant bei 99,95 Prozent.",
+        en: "Service {WORD} remains stable at 99.95 percent.",
+        ru: "{RU_WORD} сервиса стабильно держится на уровне 99,95%."
+      },
+      perception: {
+        de: "Die {WORD} des Produkts hängt stark vom ersten Eindruck ab.",
+        en: "Product {WORD} strongly depends on first impression.",
+        ru: "{RU_WORD} продукта сильно зависит от первого впечатления."
+      },
+      assumption: {
+        de: "Diese {WORD} müssen wir mit echten Nutzerdaten prüfen.",
+        en: "This {WORD} must be validated with real user data.",
+        ru: "Это {RU_WORD} нужно проверить на реальных пользовательских данных."
+      },
+      implication: {
+        de: "Die rechtliche {WORD} dieser Änderung wurde im Board besprochen.",
+        en: "The legal {WORD} of this change was discussed by the board.",
+        ru: "Юридическое {RU_WORD} этого изменения обсудили на совете."
+      },
+      coherence: {
+        de: "Die {WORD} des Textes verbessert sich mit klaren Übergängen.",
+        en: "The text {WORD} improves with clear transitions.",
+        ru: "{RU_WORD} текста улучшается при четких переходах."
+      },
+      ambiguity: {
+        de: "Diese Formulierung erzeugt unnötige {WORD} im Vertrag.",
+        en: "This wording creates unnecessary {WORD} in the contract.",
+        ru: "Эта формулировка создает лишнюю {RU_WORD} в договоре."
+      },
+      distinction: {
+        de: "Die klare {WORD} zwischen Rolle und Verantwortung ist wichtig.",
+        en: "A clear {WORD} between role and responsibility is important.",
+        ru: "Четкое {RU_WORD} между ролью и ответственностью важно."
+      },
+      interpretation: {
+        de: "Die {WORD} der Statistik variiert je nach Fachbereich.",
+        en: "The {WORD} of the statistic varies by domain.",
+        ru: "{RU_WORD} этой статистики меняется в зависимости от области."
+      },
+      inference: {
+        de: "Diese {WORD} folgt direkt aus den Messwerten.",
+        en: "This {WORD} follows directly from the measurements.",
+        ru: "Этот {RU_WORD} напрямую следует из измерений."
+      },
+      premise: {
+        de: "Die erste {WORD} des Arguments ist empirisch gut belegt.",
+        en: "The first {WORD} of the argument is empirically well supported.",
+        ru: "Первая {RU_WORD} аргумента эмпирически хорошо подтверждена."
+      },
+      justification: {
+        de: "Ohne klare {WORD} lehnt das Komitee den Antrag ab.",
+        en: "Without clear {WORD}, the committee rejects the proposal.",
+        ru: "Без четкого {RU_WORD} комитет отклоняет заявку."
+      },
+      contradiction: {
+        de: "Im Bericht gibt es eine offensichtliche {WORD} zwischen Zahlen und Text.",
+        en: "The report contains an obvious {WORD} between numbers and text.",
+        ru: "В отчете есть явное {RU_WORD} между цифрами и текстом."
+      },
+      paradox: {
+        de: "Das {WORD} besteht darin, dass mehr Kontrolle weniger Stabilität bringt.",
+        en: "The {WORD} is that more control leads to less stability.",
+        ru: "{RU_WORD} в том, что больше контроля дает меньше стабильности."
+      },
+      controversy: {
+        de: "Die {WORD} um das Gesetz dauerte mehrere Monate.",
+        en: "The legal {WORD} lasted for several months.",
+        ru: "{RU_WORD} вокруг закона длилась несколько месяцев."
+      },
+      dilemma: {
+        de: "Das Team steht vor einem {WORD} zwischen Tempo und Qualität.",
+        en: "The team faces a {WORD} between speed and quality.",
+        ru: "Команда стоит перед {RU_WORD} между скоростью и качеством."
+      },
+      complexity: {
+        de: "Die technische {WORD} steigt mit jeder neuen Integration.",
+        en: "Technical {WORD} grows with each new integration.",
+        ru: "Техническая {RU_WORD} растет с каждой новой интеграцией."
+      },
+      interdependence: {
+        de: "Die {WORD} der Systeme macht das Testing anspruchsvoll.",
+        en: "System {WORD} makes testing more demanding.",
+        ru: "{RU_WORD} систем делает тестирование сложнее."
+      },
+      paradigm: {
+        de: "Das neue KI-{WORD} verändert die Produktstrategie.",
+        en: "The new AI {WORD} changes product strategy.",
+        ru: "Новая ИИ-{RU_WORD} меняет продуктовую стратегию."
+      },
+      discourse: {
+        de: "Im öffentlichen {WORD} wird Datenschutz immer zentraler.",
+        en: "In public {WORD}, privacy is becoming increasingly central.",
+        ru: "В общественном {RU_WORD} тема приватности становится центральной."
+      },
+      narrative: {
+        de: "Das politische {WORD} beeinflusst die Wahrnehmung der Reform.",
+        en: "The political {WORD} shapes perception of the reform.",
+        ru: "Политический {RU_WORD} влияет на восприятие реформы."
+      },
+      rhetoric: {
+        de: "Seine {WORD} wirkt überzeugend, aber die Daten fehlen.",
+        en: "His {WORD} sounds convincing, but data is missing.",
+        ru: "Его {RU_WORD} звучит убедительно, но данных не хватает."
+      },
+      perspective: {
+        de: "Aus technischer {WORD} ist die Lösung gut skalierbar.",
+        en: "From a technical {WORD}, the solution scales well.",
+        ru: "С технической {RU_WORD} решение хорошо масштабируется."
+      },
+      bias: {
+        de: "Im Datensatz wurde ein klarer {WORD} gegen kleine Regionen gefunden.",
+        en: "A clear regional {WORD} was found in the dataset.",
+        ru: "В датасете нашли явную {RU_WORD} против малых регионов."
+      },
+      stereotype: {
+        de: "Diese Werbekampagne reproduziert ein altes {WORD}.",
+        en: "This campaign reproduces an old {WORD}.",
+        ru: "Эта кампания воспроизводит старый {RU_WORD}."
+      },
+      diversity: {
+        de: "Mehr {WORD} im Team verbessert die Qualität von Ideen.",
+        en: "More team {WORD} improves idea quality.",
+        ru: "Большая {RU_WORD} в команде повышает качество идей."
+      },
+      inclusion: {
+        de: "Die {WORD} neuer Kollegen beginnt schon im Onboarding.",
+        en: "{WORD} of new colleagues starts during onboarding.",
+        ru: "{RU_WORD} новых коллег начинается уже на этапе онбординга."
+      },
+      ethics: {
+        de: "Bei KI-Projekten ist {WORD} kein optionales Thema.",
+        en: "In AI projects, {WORD} is not optional.",
+        ru: "В AI-проектах {RU_WORD} — не опциональная тема."
+      },
+      legitimacy: {
+        de: "Ohne Transparenz leidet die {WORD} dieser Entscheidung.",
+        en: "Without transparency, the decision’s {WORD} suffers.",
+        ru: "Без прозрачности страдает {RU_WORD} этого решения."
+      },
+      sovereignty: {
+        de: "Digitale {WORD} wird in Europa politisch stark diskutiert.",
+        en: "Digital {WORD} is heavily debated in Europe.",
+        ru: "Цифровой {RU_WORD} активно обсуждается в Европе."
+      },
+      jurisdiction: {
+        de: "Die {WORD} entscheidet, welches Gericht zuständig ist.",
+        en: "{WORD} determines which court is competent.",
+        ru: "{RU_WORD} определяет, какой суд имеет полномочия."
+      },
+      constitution: {
+        de: "Die {WORD} garantiert grundlegende Freiheitsrechte.",
+        en: "The {WORD} guarantees fundamental civil rights.",
+        ru: "{RU_WORD} гарантирует базовые гражданские права."
+      },
+      institution: {
+        de: "Diese {WORD} ist fuer die Kontrolle des Marktes zuständig.",
+        en: "This {WORD} is responsible for market oversight.",
+        ru: "Эта {RU_WORD} отвечает за контроль рынка."
+      },
+      bureaucracy: {
+        de: "Zu viel {WORD} verlangsamt die Umsetzung guter Ideen.",
+        en: "Too much {WORD} slows down implementation of good ideas.",
+        ru: "Избыточная {RU_WORD} тормозит реализацию хороших идей."
+      },
+      administration: {
+        de: "Die {WORD} hat den Antrag innerhalb von drei Tagen bearbeitet.",
+        en: "The {WORD} processed the request within three days.",
+        ru: "{RU_WORD} обработала запрос за три дня."
+      },
+      feasibility: {
+        de: "Die {WORD} des Plans hängt vom Budget ab.",
+        en: "Plan {WORD} depends on available budget.",
+        ru: "{RU_WORD} плана зависит от доступного бюджета."
+      },
+      viability: {
+        de: "Die wirtschaftliche {WORD} des Produkts wurde positiv bewertet.",
+        en: "The product’s economic {WORD} was rated positively.",
+        ru: "Экономическую {RU_WORD} продукта оценили положительно."
+      },
+      robustness: {
+        de: "Die {WORD} des Modells wurde unter Last getestet.",
+        en: "Model {WORD} was tested under high load.",
+        ru: "{RU_WORD} модели проверили под высокой нагрузкой."
+      },
+      resilience: {
+        de: "Nach dem Ausfall zeigte das System hohe {WORD}.",
+        en: "After the outage, the system showed strong {WORD}.",
+        ru: "После сбоя система показала высокую {RU_WORD}."
+      },
+      vulnerability: {
+        de: "Die {WORD} wurde im Penetrationstest sofort entdeckt.",
+        en: "The {WORD} was detected immediately in a penetration test.",
+        ru: "{RU_WORD} сразу обнаружили в пентесте."
+      },
+      uncertainty: {
+        de: "Die {WORD} der Prognose bleibt wegen fehlender Daten hoch.",
+        en: "Forecast {WORD} remains high due to missing data.",
+        ru: "{RU_WORD} прогноза остается высокой из-за нехватки данных."
+      },
+      probability: {
+        de: "Die {WORD} eines Ausfalls liegt unter einem Prozent.",
+        en: "The outage {WORD} is below one percent.",
+        ru: "{RU_WORD} сбоя ниже одного процента."
+      },
+      threshold: {
+        de: "Wenn dieser {WORD} überschritten wird, startet ein Alarm.",
+        en: "If this {WORD} is exceeded, an alert is triggered.",
+        ru: "Если этот {RU_WORD} превышен, запускается тревога."
+      },
+      sensitivity: {
+        de: "Die {WORD} des Sensors wurde neu kalibriert.",
+        en: "Sensor {WORD} was recalibrated.",
+        ru: "{RU_WORD} сенсора была заново откалибрована."
+      },
+      precision: {
+        de: "Für diese Messung brauchen wir maximale {WORD}.",
+        en: "This measurement requires maximum {WORD}.",
+        ru: "Для этого измерения нужна максимальная {RU_WORD}."
+      },
+      validity: {
+        de: "Die {WORD} der Studie hängt von der Stichprobe ab.",
+        en: "Study {WORD} depends on the sample design.",
+        ru: "{RU_WORD} исследования зависит от структуры выборки."
+      },
+      replicability: {
+        de: "Ohne offene Daten sinkt die {WORD} der Ergebnisse.",
+        en: "Without open data, result {WORD} decreases.",
+        ru: "Без открытых данных {RU_WORD} результатов снижается."
+      },
+      methodology: {
+        de: "Die {WORD} wurde vor Beginn vom Komitee genehmigt.",
+        en: "The {WORD} was approved by the committee before start.",
+        ru: "{RU_WORD} утвердил комитет еще до начала работы."
+      },
+      synthesis: {
+        de: "Die {WORD} der Quellen zeigt ein klares Gesamtbild.",
+        en: "Source {WORD} reveals a coherent overall picture.",
+        ru: "{RU_WORD} источников дает целостную картину."
+      },
+      optimization: {
+        de: "Durch {WORD} der Abfragen wurde die Seite doppelt so schnell.",
+        en: "After query {WORD}, the page became twice as fast.",
+        ru: "После {RU_WORD} запросов страница стала вдвое быстрее."
+      },
+      prioritization: {
+        de: "Ohne klare {WORD} wächst der Backlog unkontrolliert.",
+        en: "Without clear {WORD}, the backlog grows uncontrollably.",
+        ru: "Без четкой {RU_WORD} бэклог растет неконтролируемо."
+      },
+      allocation: {
+        de: "Die {WORD} des Budgets wurde im Lenkungsausschuss beschlossen.",
+        en: "Budget {WORD} was approved by the steering committee.",
+        ru: "{RU_WORD} бюджета утвердили на управляющем комитете."
+      },
+      distribution: {
+        de: "Die {WORD} der Last auf Server wurde neu ausbalanciert.",
+        en: "Load {WORD} across servers was rebalanced.",
+        ru: "{RU_WORD} нагрузки по серверам была перераспределена."
+      },
+      scarcity: {
+        de: "Die {WORD} an Fachkräften bremst mehrere Projekte.",
+        en: "{WORD} of skilled staff slows multiple projects.",
+        ru: "{RU_WORD} квалифицированных специалистов тормозит несколько проектов."
+      },
+      abundance: {
+        de: "Die {WORD} an Daten verbessert das Training des Modells.",
+        en: "Data {WORD} improves model training quality.",
+        ru: "{RU_WORD} данных улучшает обучение модели."
+      },
+      prosperity: {
+        de: "Langfristige {WORD} braucht stabile Institutionen.",
+        en: "Long-term {WORD} requires stable institutions.",
+        ru: "Долгосрочное {RU_WORD} требует стабильных институтов."
+      },
+      inequality: {
+        de: "Diese Steuerreform soll {WORD} zwischen Regionen reduzieren.",
+        en: "This tax reform aims to reduce regional {WORD}.",
+        ru: "Эта налоговая реформа должна снизить региональное {RU_WORD}."
+      },
+      volatility: {
+        de: "Hohe Markt-{WORD} erschwert die Investitionsplanung.",
+        en: "High market {WORD} complicates investment planning.",
+        ru: "Высокая рыночная {RU_WORD} усложняет инвестиционное планирование."
+      },
+      stability: {
+        de: "Die {WORD} des Systems wurde nach dem Update verbessert.",
+        en: "System {WORD} improved after the update.",
+        ru: "{RU_WORD} системы улучшилась после обновления."
+      },
+      adaptation: {
+        de: "Schnelle {WORD} an neue Regeln war für den Erfolg entscheidend.",
+        en: "Rapid {WORD} to new rules was critical for success.",
+        ru: "Быстрая {RU_WORD} к новым правилам была критична для успеха."
+      },
+      disruption: {
+        de: "Die {WORD} in der Lieferkette dauerte fast zwei Wochen.",
+        en: "The supply-chain {WORD} lasted nearly two weeks.",
+        ru: "{RU_WORD} в цепочке поставок длилась почти две недели."
+      },
+      intervention: {
+        de: "Eine frühzeitige {WORD} verhinderte den Ausfall.",
+        en: "Early {WORD} prevented the outage.",
+        ru: "Раннее {RU_WORD} предотвратило сбой."
+      },
+      moderation: {
+        de: "Aktive {WORD} hält die Diskussion sachlich.",
+        en: "Active {WORD} keeps discussion constructive.",
+        ru: "Активная {RU_WORD} удерживает дискуссию в конструктивном русле."
+      },
+      facilitation: {
+        de: "Gute {WORD} machte den Workshop deutlich produktiver.",
+        en: "Good {WORD} made the workshop far more productive.",
+        ru: "Качественная {RU_WORD} сделала воркшоп намного продуктивнее."
+      },
+      plurality: {
+        de: "Politische {WORD} stärkt die Qualität der Debatte.",
+        en: "Political {WORD} strengthens debate quality.",
+        ru: "Политическая {RU_WORD} повышает качество дискуссии."
+      },
+      cohesion: {
+        de: "Hohe Team-{WORD} hilft uns in Stressphasen.",
+        en: "Strong team {WORD} helps during high-pressure periods.",
+        ru: "Высокая командная {RU_WORD} помогает в стрессовые периоды."
+      },
+      fragmentation: {
+        de: "Die {WORD} der Plattform erschwert einheitliche Standards.",
+        en: "Platform {WORD} makes common standards harder.",
+        ru: "{RU_WORD} платформы затрудняет единые стандарты."
+      },
+      polarization: {
+        de: "Die {WORD} in sozialen Medien nimmt weiter zu.",
+        en: "{WORD} in social media keeps increasing.",
+        ru: "{RU_WORD} в социальных сетях продолжает расти."
+      },
+      reconciliation: {
+        de: "Nach dem Konflikt braucht das Team echte {WORD}.",
+        en: "After the conflict, the team needs real {WORD}.",
+        ru: "После конфликта команде нужно настоящее {RU_WORD}."
+      },
+      legacy: {
+        de: "Das {WORD} dieses Projekts ist ein offenes Lernprogramm.",
+        en: "The project’s {WORD} is an open learning program.",
+        ru: "{RU_WORD} этого проекта — открытая обучающая программа."
+      }
+    };
+
+    const authScreen = document.getElementById("auth-screen");
     const frontScreen = document.getElementById("front-screen");
     const gameScreen = document.getElementById("game-screen");
     const trainingScreen = document.getElementById("training-screen");
 
+    const authUsernameEl = document.getElementById("auth-username");
+    const authPasswordEl = document.getElementById("auth-password");
+    const rememberMeEl = document.getElementById("remember-me");
+    const loginBtn = document.getElementById("login-btn");
+    const registerBtn = document.getElementById("register-btn");
+    const authStatusEl = document.getElementById("auth-status");
+
     const startGameBtn = document.getElementById("start-game");
+    const startVerbGameBtn = document.getElementById("start-verb-game");
     const startTrainingBtn = document.getElementById("start-training");
     const dictOnlyInput = document.getElementById("dict-only");
+    const logoutFrontBtn = document.getElementById("logout-front");
+    const accountFrontEl = document.getElementById("account-front");
+    const leaderboardListEl = document.getElementById("leaderboard-list");
     const frontStatusEl = document.getElementById("front-status");
     const recordFrontEl = document.getElementById("record-front");
 
     const englishRoot = document.getElementById("english-cards");
     const germanRoot = document.getElementById("german-cards");
+    const leftHeadingEl = document.getElementById("left-heading");
+    const rightHeadingEl = document.getElementById("right-heading");
     const statusEl = document.getElementById("status");
+    const contextBoxEl = document.getElementById("context-box");
+    const contextMainEl = document.getElementById("context-main");
+    const contextTranslationEl = document.getElementById("context-translation");
 
     const modePill = document.getElementById("mode-pill");
     const levelPill = document.getElementById("level-pill");
@@ -643,7 +1806,9 @@
     const timerPill = document.getElementById("timer-pill");
     const totalPill = document.getElementById("total-pill");
     const recordPill = document.getElementById("record-pill");
-    const gameHomeBtn = document.getElementById("game-home");
+    const logoutGameBtn = document.getElementById("logout-game");
+    const logoutTrainingBtn = document.getElementById("logout-training");
+    const homeBrandButtons = [...document.querySelectorAll('[data-home="true"]')];
 
     const overlay = document.getElementById("stage-overlay");
     const stageTitle = document.getElementById("stage-title");
@@ -656,6 +1821,8 @@
     const trainingCountPill = document.getElementById("training-count-pill");
     const trainingWordEl = document.getElementById("training-word");
     const trainingTranslationEl = document.getElementById("training-translation");
+    const trainingDefinitionLabelEl = document.getElementById("training-definition-label");
+    const trainingExampleLabelEl = document.getElementById("training-example-label");
     const trainingDefinitionEl = document.getElementById("training-definition");
     const trainingExampleEl = document.getElementById("training-example");
     const trainingStatusEl = document.getElementById("training-status");
@@ -663,9 +1830,11 @@
     const trainingSpeakBtn = document.getElementById("training-speak");
     const trainingNextBtn = document.getElementById("training-next");
     const trainingRemoveBtn = document.getElementById("training-remove");
-    const trainingBackBtn = document.getElementById("training-back");
 
     let selectedLevel = "A1";
+    let selectedPairId = "EN-DE";
+    let selectedGameMode = GAME_MODES.MIXED;
+    let currentPair = { id: "EN-DE", leftLang: "en", rightLang: "de", leftLabel: "English", rightLabel: "German" };
     let dictionaryOnlyMode = false;
     let stages = [];
     let currentStageWordsByKey = {};
@@ -685,27 +1854,107 @@
     let bestScore = 0;
     let dictionaryWords = [];
     let preferredGermanVoice = null;
+    let preferredEnglishVoice = null;
+    let recentSessionsByMode = {};
+    let users = [];
+    let currentUserName = null;
 
     let trainingWords = [];
     let trainingIndex = 0;
+    let contextUsageByKey = {};
 
-    function loadState() {
-      const storedBest = Number(window.localStorage.getItem(STORAGE_KEYS.bestScore));
-      bestScore = Number.isFinite(storedBest) ? storedBest : 0;
+    function normalizeUsername(username) {
+      return (username || "").trim().toLowerCase();
+    }
 
+    function loadUsers() {
       try {
-        const rawDictionary = window.localStorage.getItem(STORAGE_KEYS.dictionary);
-        const parsed = rawDictionary ? JSON.parse(rawDictionary) : [];
-        dictionaryWords = Array.isArray(parsed) ? parsed : [];
+        const raw = window.localStorage.getItem(STORAGE_KEYS.users);
+        const parsed = raw ? JSON.parse(raw) : [];
+        users = Array.isArray(parsed) ? parsed : [];
       } catch (error) {
-        dictionaryWords = [];
+        users = [];
+      }
+    }
+
+    function saveUsers() {
+      window.localStorage.setItem(STORAGE_KEYS.users, JSON.stringify(users));
+    }
+
+    function findUser(username) {
+      const normalized = normalizeUsername(username);
+      return users.find((user) => user.username === normalized) || null;
+    }
+
+    function getSessionUser() {
+      const temp = window.sessionStorage.getItem(STORAGE_KEYS.sessionTemp);
+      const saved = window.localStorage.getItem(STORAGE_KEYS.session);
+      return temp || saved || null;
+    }
+
+    function setSessionUser(username, remember) {
+      window.sessionStorage.setItem(STORAGE_KEYS.sessionTemp, username);
+      if (remember) {
+        window.localStorage.setItem(STORAGE_KEYS.session, username);
+      } else {
+        window.localStorage.removeItem(STORAGE_KEYS.session);
+      }
+    }
+
+    function clearSessionUser() {
+      window.sessionStorage.removeItem(STORAGE_KEYS.sessionTemp);
+      window.localStorage.removeItem(STORAGE_KEYS.session);
+    }
+
+    function showAuth(message) {
+      clearTimer();
+      overlay.classList.remove("open");
+      authScreen.classList.remove("hidden");
+      frontScreen.classList.add("hidden");
+      gameScreen.classList.add("hidden");
+      trainingScreen.classList.add("hidden");
+      authStatusEl.textContent = message || "";
+    }
+
+    function showFront() {
+      authScreen.classList.add("hidden");
+      frontScreen.classList.remove("hidden");
+      gameScreen.classList.add("hidden");
+      trainingScreen.classList.add("hidden");
+    }
+
+    function setCurrentUser(username) {
+      const user = findUser(username);
+      if (!user) {
+        currentUserName = null;
+        return false;
       }
 
+      currentUserName = user.username;
+      bestScore = Number.isFinite(Number(user.bestScore)) ? Number(user.bestScore) : 0;
+      dictionaryWords = Array.isArray(user.dictionaryWords) ? user.dictionaryWords : [];
+      recentSessionsByMode = user.recentSessionsByMode && typeof user.recentSessionsByMode === "object"
+        ? user.recentSessionsByMode
+        : {};
+      accountFrontEl.textContent = `Signed in as: ${currentUserName}`;
       updateBestScoreUI();
+      renderLeaderboard();
+      return true;
+    }
+
+    function persistCurrentUserState() {
+      if (!currentUserName) return;
+      const user = findUser(currentUserName);
+      if (!user) return;
+      user.bestScore = bestScore;
+      user.dictionaryWords = dictionaryWords;
+      user.recentSessionsByMode = recentSessionsByMode;
+      saveUsers();
+      renderLeaderboard();
     }
 
     function persistDictionary() {
-      window.localStorage.setItem(STORAGE_KEYS.dictionary, JSON.stringify(dictionaryWords));
+      persistCurrentUserState();
     }
 
     function updateBestScoreUI() {
@@ -716,9 +1965,30 @@
     function updateBestScoreIfNeeded() {
       if (totalPoints > bestScore) {
         bestScore = totalPoints;
-        window.localStorage.setItem(STORAGE_KEYS.bestScore, String(bestScore));
         updateBestScoreUI();
+        persistCurrentUserState();
       }
+    }
+
+    function renderLeaderboard() {
+      loadUsers();
+      const ranked = [...users]
+        .map((user) => ({ username: user.username, bestScore: Number(user.bestScore) || 0 }))
+        .sort((a, b) => b.bestScore - a.bestScore);
+
+      leaderboardListEl.innerHTML = "";
+      if (!ranked.length) {
+        const li = document.createElement("li");
+        li.textContent = "No data yet";
+        leaderboardListEl.appendChild(li);
+        return;
+      }
+
+      ranked.forEach((entry) => {
+        const li = document.createElement("li");
+        li.textContent = `${entry.username}: ${entry.bestScore}`;
+        leaderboardListEl.appendChild(li);
+      });
     }
 
     function shuffle(items) {
@@ -730,27 +2000,30 @@
       return arr;
     }
 
-    function getAllWords() {
-      return Object.entries(wordsByLevel).flatMap(([level, words]) => words.map((word) => ({ ...word, level })));
-    }
-
     function isWordStarred(word) {
-      return dictionaryWords.some((entry) => entry.de === word.de);
+      return dictionaryWords.some((entry) => entry.pairId === currentPair.id && entry.right === word.right);
     }
 
     function toggleDictionaryWord(word) {
       const exists = isWordStarred(word);
       if (exists) {
-        dictionaryWords = dictionaryWords.filter((entry) => entry.de !== word.de);
+        dictionaryWords = dictionaryWords.filter((entry) => !(entry.pairId === currentPair.id && entry.right === word.right));
       } else {
-        dictionaryWords.push({ en: word.en, de: word.de, level: word.level || selectedLevel });
+        dictionaryWords.push({
+          pairId: currentPair.id,
+          left: word.left,
+          right: word.right,
+          leftLang: currentPair.leftLang,
+          rightLang: currentPair.rightLang,
+          level: word.level || selectedLevel
+        });
       }
       persistDictionary();
       return !exists;
     }
 
     function buildStages(sourceWords) {
-      const words = shuffle(sourceWords);
+      const words = sourceWords;
       const chunks = [];
 
       for (let i = 0; i < words.length; i += 5) {
@@ -763,21 +2036,184 @@
       return chunks;
     }
 
-    function getPlayableWords(level, onlyDictionary) {
-      if (onlyDictionary) {
-        return dictionaryWords.map((word) => ({ ...word }));
-      }
-
-      return wordsByLevel[level].map((word) => ({ ...word, level }));
+    function buildVerbStages() {
+      return buildStages(
+        shuffle(VERB_PREPOSITION_WORDS).map((entry) => ({
+          key: `${entry.verb}|${entry.preposition}|${entry.grammaticalCase}`,
+          left: entry.verb,
+          right: `${entry.preposition} ${entry.grammaticalCase}`,
+          preposition: entry.preposition,
+          grammaticalCase: entry.grammaticalCase,
+          example: entry.example,
+          leftLang: "de",
+          rightLang: "de",
+          kind: "verbPrep"
+        }))
+      ).map((items) => ({ type: "verbPrep", items }));
     }
 
-    function scoreGermanVoice(voice) {
+    function getModeKey(level, onlyDictionary) {
+      if (onlyDictionary) {
+        return `dictionary-only-${currentPair.id}`;
+      }
+      return `level-${currentPair.id}-${level}`;
+    }
+
+    function buildStagesWithoutImmediateRepeat(sourceWords, modeKey) {
+      const recentDe = Array.isArray(recentSessionsByMode[modeKey]) ? recentSessionsByMode[modeKey] : [];
+      if (!recentDe.length) {
+        return buildStages(shuffle(sourceWords));
+      }
+
+      const recentSet = new Set(recentDe);
+      const freshWords = sourceWords.filter((word) => !recentSet.has(word.right));
+      const repeatedWords = sourceWords.filter((word) => recentSet.has(word.right));
+
+      let arranged = [];
+      if (freshWords.length >= 5) {
+        arranged = [...shuffle(freshWords), ...shuffle(repeatedWords)];
+      } else {
+        arranged = shuffle(sourceWords);
+      }
+
+      return buildStages(arranged);
+    }
+
+    function buildMixedStages(wordStages, verbStages) {
+      const mixed = [];
+      let verbIndex = 0;
+
+      wordStages.forEach((items, index) => {
+        mixed.push({ type: "words", items });
+        if ((index + 1) % 2 === 0 && verbStages.length) {
+          mixed.push(verbStages[verbIndex % verbStages.length]);
+          verbIndex += 1;
+        }
+      });
+
+      if (!mixed.length && verbStages.length) {
+        return [...verbStages];
+      }
+
+      return mixed;
+    }
+
+    function buildStageSequence(level, onlyDictionary, mode) {
+      if (mode === GAME_MODES.VERB) {
+        return buildVerbStages();
+      }
+
+      const modeKey = getModeKey(level, onlyDictionary);
+      const wordStages = buildStagesWithoutImmediateRepeat(getPlayableWords(level, onlyDictionary), modeKey);
+      rememberSessionWords(modeKey, wordStages);
+      return buildMixedStages(wordStages, buildVerbStages());
+    }
+
+    function rememberSessionWords(modeKey, sessionStages) {
+      const usedWords = Array.from(
+        new Set(sessionStages.flat().map((word) => word.right))
+      );
+      recentSessionsByMode[modeKey] = usedWords;
+      persistCurrentUserState();
+    }
+
+    function getRussianWord(baseWord) {
+      if (RU_BY_EN[baseWord.en]) {
+        return RU_BY_EN[baseWord.en];
+      }
+
+      const chunkDict = {
+        experience: "опыт", decision: "решение", opportunity: "возможность", relationship: "отношение", responsibility: "ответственность",
+        research: "исследование", analysis: "анализ", method: "метод", data: "данные", strategy: "стратегия", context: "контекст",
+        perception: "восприятие", assumption: "предположение", implication: "следствие", framework: "рамка", interpretation: "интерпретация",
+        argumentation: "аргументация", consistency: "согласованность", contradiction: "противоречие", consensus: "консенсус",
+        sustainability: "устойчивость", innovation: "инновация", regulation: "регулирование", policy: "политика", governance: "управление",
+        corridor: "коридор", elevator: "лифт", neighborhood: "район", capital: "столица", reservation: "бронирование",
+        traffic: "движение", crosswalk: "пешеходный переход", baker: "пекарь", butcher: "мясник", tooth: "зуб", discount: "скидка",
+        fashion: "мода", cash: "наличные", card: "карта", account: "счет", post: "почта", office: "офис", stamp: "марка",
+        email: "электронная почта", training: "тренировка", match: "матч", newspaper: "газета", magazine: "журнал", article: "статья",
+        photo: "фото", island: "остров", playground: "детская площадка", language: "язык", school: "школа",
+        habit: "привычка", success: "успех", future: "будущее", health: "здоровье", environment: "окружающая среда", education: "образование",
+        advice: "совет", memory: "память", ability: "способность", effort: "усилие", advantage: "преимущество", disadvantage: "недостаток",
+        reason: "причина", result: "результат", comparison: "сравнение", difference: "разница", similarity: "сходство", expectation: "ожидание",
+        fear: "страх", hope: "надежда", dream: "мечта", challenge: "вызов", solution: "решение", problem: "проблема", conflict: "конфликт",
+        compromise: "компромисс", support: "поддержка", respect: "уважение", trust: "доверие", patience: "терпение", stress: "стресс",
+        balance: "баланс", lifestyle: "образ жизни", diet: "питание", exercise: "упражнение", sleep: "сон", society: "общество",
+        community: "сообщество", culture: "культура", tradition: "традиция", festival: "фестиваль", custom: "обычай", religion: "религия",
+        history: "история", generation: "поколение", childhood: "детство", adulthood: "взрослая жизнь", citizen: "гражданин",
+        right: "право", law: "закон", duty: "обязанность", service: "служба", volunteer: "волонтер", donation: "пожертвование",
+        charity: "благотворительность", media: "медиа", report: "отчет", headline: "заголовок", interview: "интервью", opinion: "мнение",
+        argument: "аргумент", discussion: "обсуждение", debate: "дебаты", point: "точка", view: "зрение", evidence: "доказательство",
+        fact: "факт", development: "развитие", progress: "прогресс", technology: "технология", device: "устройство", software: "программное обеспечение",
+        internet: "интернет", privacy: "конфиденциальность", security: "безопасность", risk: "риск", benefit: "польза", industry: "промышленность",
+        economy: "экономика", employment: "занятость", unemployment: "безработица", income: "доход", expense: "расход", budget: "бюджет",
+        saving: "сбережение", investment: "инвестиция", career: "карьера", path: "путь", qualification: "квалификация", application: "заявка",
+        process: "процесс", promotion: "повышение", hypothesis: "гипотеза", finding: "вывод", conclusion: "заключение", criterion: "критерий",
+        indicator: "индикатор", factor: "фактор", variable: "переменная", trend: "тренд", pattern: "паттерн", correlation: "корреляция",
+        cause: "причина", effect: "эффект", impact: "влияние", consequence: "последствие", approach: "подход", model: "модель",
+        scenario: "сценарий", requirement: "требование", constraint: "ограничение", resource: "ресурс", capacity: "вместимость",
+        efficiency: "эффективность", productivity: "производительность", quality: "качество", standard: "стандарт", benchmark: "ориентир",
+        implementation: "внедрение", execution: "исполнение", outcome: "исход", objective: "цель", priority: "приоритет", deadline: "срок",
+        negotiation: "переговоры", agreement: "соглашение", contract: "контракт", clause: "пункт", obligation: "обязательство",
+        compliance: "соответствие", stakeholder: "заинтересованная сторона", partnership: "партнерство", collaboration: "сотрудничество",
+        coordination: "координация", communication: "коммуникация", feedback: "обратная связь", evaluation: "оценка", assessment: "оценивание",
+        review: "обзор", monitoring: "мониторинг", threat: "угроза", invention: "изобретение", adoption: "принятие", transition: "переход",
+        transformation: "трансформация", emission: "выброс", consumption: "потребление", supply: "поставка", demand: "спрос",
+        competition: "конкуренция", enterprise: "предприятие", startup: "стартап", corporation: "корпорация", department: "отдел",
+        leadership: "лидерство", management: "управление", expertise: "экспертиза", specialization: "специализация", competence: "компетентность",
+        performance: "производительность", motivation: "мотивация", commitment: "обязательность", satisfaction: "удовлетворенность",
+        mediation: "медиация", disagreement: "разногласие", credibility: "достоверность", reputation: "репутация", transparency: "прозрачность",
+        integrity: "целостность", reliability: "надежность", coherence: "связность", ambiguity: "неоднозначность", nuance: "нюанс",
+        distinction: "различие", inference: "вывод", premise: "посылка", reasoning: "рассуждение", justification: "обоснование",
+        paradox: "парадокс", controversy: "спор", dilemma: "дилемма", complexity: "сложность", interdependence: "взаимозависимость",
+        paradigm: "парадигма", discourse: "дискурс", narrative: "нарратив", rhetoric: "риторика", perspective: "перспектива",
+        mindset: "образ мышления", attitude: "отношение", stance: "позиция", bias: "предвзятость", prejudice: "предрассудок",
+        stereotype: "стереотип", identity: "идентичность", diversity: "разнообразие", inclusion: "инклюзия", equity: "справедливость",
+        ethics: "этика", morality: "мораль", legitimacy: "легитимность", sovereignty: "суверенитет", jurisdiction: "юрисдикция",
+        constitution: "конституция", institution: "институт", bureaucracy: "бюрократия", administration: "администрирование",
+        feasibility: "осуществимость", viability: "жизнеспособность", robustness: "устойчивость", resilience: "резильентность",
+        vulnerability: "уязвимость", uncertainty: "неопределенность", probability: "вероятность", threshold: "порог", sensitivity: "чувствительность",
+        precision: "точность", accuracy: "точность", validity: "валидность", replicability: "воспроизводимость", methodology: "методология",
+        synthesis: "синтез", optimization: "оптимизация", prioritization: "приоритизация", allocation: "распределение", distribution: "дистрибуция",
+        scarcity: "дефицит", abundance: "изобилие", prosperity: "процветание", inequality: "неравенство", deprivation: "лишение",
+        volatility: "волатильность", stability: "стабильность", adaptation: "адаптация", disruption: "срыв", externality: "экстерналия",
+        intervention: "вмешательство", moderation: "модерация", facilitation: "фасилитация", plurality: "множественность",
+        cohesion: "сплоченность", fragmentation: "фрагментация", polarization: "поляризация", reconciliation: "примирение", legacy: "наследие"
+      };
+      const parts = baseWord.en.toLowerCase().split(/[\s-]+/).filter(Boolean);
+      const translated = parts.map((p) => chunkDict[p] || "понятие");
+      return translated.join(" ");
+    }
+
+    function toPairWord(baseWord, level) {
+      const ru = getRussianWord(baseWord);
+      if (currentPair.id === "EN-DE") {
+        return { key: baseWord.en, left: baseWord.en, right: baseWord.de, leftLang: "en", rightLang: "de", level };
+      }
+      if (currentPair.id === "RU-EN") {
+        return { key: baseWord.en, left: ru, right: baseWord.en, leftLang: "ru", rightLang: "en", level };
+      }
+      return { key: baseWord.en, left: ru, right: baseWord.de, leftLang: "ru", rightLang: "de", level };
+    }
+
+    function getPlayableWords(level, onlyDictionary) {
+      if (onlyDictionary) {
+        return dictionaryWords
+          .filter((word) => word.pairId === currentPair.id)
+          .map((word) => ({ key: `${word.right}|${word.left}`, left: word.left, right: word.right, leftLang: word.leftLang, rightLang: word.rightLang, level: word.level }));
+      }
+
+      return wordsByLevel[level].map((word) => toPairWord(word, level));
+    }
+
+    function scoreVoice(voice, langPrefix) {
       const name = (voice.name || "").toLowerCase();
       let score = 0;
+      const locale = `${langPrefix}-${langPrefix}`.toLowerCase();
 
-      if (voice.lang && voice.lang.toLowerCase() === "de-de") {
+      if (voice.lang && voice.lang.toLowerCase() === locale) {
         score += 40;
-      } else if (voice.lang && voice.lang.toLowerCase().startsWith("de")) {
+      } else if (voice.lang && voice.lang.toLowerCase().startsWith(langPrefix)) {
         score += 30;
       }
 
@@ -798,28 +2234,31 @@
       if (name.includes("siri")) {
         score += 18;
       }
-      if (name.includes("google deutsch") || name.includes("microsoft")) {
+      if (name.includes("google") || name.includes("microsoft")) {
         score += 10;
       }
 
       return score;
     }
 
-    function refreshPreferredGermanVoice() {
+    function refreshPreferredVoice(langPrefix) {
       if (!("speechSynthesis" in window)) {
-        preferredGermanVoice = null;
-        return;
+        return null;
       }
 
       const voices = window.speechSynthesis.getVoices();
-      const germanVoices = voices.filter((voice) => voice.lang && voice.lang.toLowerCase().startsWith("de"));
-      if (!germanVoices.length) {
-        preferredGermanVoice = null;
-        return;
+      const matchingVoices = voices.filter((voice) => voice.lang && voice.lang.toLowerCase().startsWith(langPrefix));
+      if (!matchingVoices.length) {
+        return null;
       }
 
-      germanVoices.sort((a, b) => scoreGermanVoice(b) - scoreGermanVoice(a));
-      preferredGermanVoice = germanVoices[0];
+      matchingVoices.sort((a, b) => scoreVoice(b, langPrefix) - scoreVoice(a, langPrefix));
+      return matchingVoices[0];
+    }
+
+    function refreshPreferredVoices() {
+      preferredGermanVoice = refreshPreferredVoice("de");
+      preferredEnglishVoice = refreshPreferredVoice("en");
     }
 
     function initSpeech() {
@@ -827,51 +2266,132 @@
         return;
       }
 
-      refreshPreferredGermanVoice();
-      window.speechSynthesis.addEventListener("voiceschanged", refreshPreferredGermanVoice);
+      refreshPreferredVoices();
+      window.speechSynthesis.addEventListener("voiceschanged", refreshPreferredVoices);
     }
 
-    function speakGerman(text) {
+    function speakWord(text, lang) {
       if (!("speechSynthesis" in window)) {
         return;
       }
 
       const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = "de-DE";
-      if (preferredGermanVoice) {
-        utterance.voice = preferredGermanVoice;
+      if (lang === "de") {
+        utterance.lang = "de-DE";
+        if (preferredGermanVoice) {
+          utterance.voice = preferredGermanVoice;
+        }
+      } else if (lang === "en") {
+        utterance.lang = "en-US";
+        if (preferredEnglishVoice) {
+          utterance.voice = preferredEnglishVoice;
+        }
+      } else {
+        utterance.lang = "ru-RU";
       }
       utterance.rate = 0.95;
       window.speechSynthesis.cancel();
       window.speechSynthesis.speak(utterance);
     }
 
-    function createEnglishCard(item) {
+    function escapeHtml(text) {
+      return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll("\"", "&quot;")
+        .replaceAll("'", "&#39;");
+    }
+
+    function slugifyGermanToken(text) {
+      return String(text || "")
+        .toLowerCase()
+        .replaceAll("ä", "ae")
+        .replaceAll("ö", "oe")
+        .replaceAll("ü", "ue")
+        .replaceAll("ß", "ss")
+        .replace(/[^a-z]/g, "");
+    }
+
+    function renderGermanWordWithArticle(text) {
+      const match = String(text).match(/^(der|die|das)\s+(.+)$/i);
+      if (!match) {
+        return `<span class="card-text-main">${escapeHtml(text)}</span>`;
+      }
+
+      const article = match[1].toLowerCase();
+      const noun = match[2];
+      return `<span class="inline-chip article-${article}">${escapeHtml(match[1])}</span><span class="card-text-main">${escapeHtml(noun)}</span>`;
+    }
+
+    function renderVerbPrepRight(item) {
+      const prepClass = `prep-${slugifyGermanToken(item.preposition)}`;
+      const caseClass = `case-${slugifyGermanToken(item.grammaticalCase)}`;
+      return `<span class="inline-chip ${prepClass}">${escapeHtml(item.preposition)}</span><span class="inline-chip ${caseClass}">${escapeHtml(item.grammaticalCase)}</span>`;
+    }
+
+    function getCardMarkup(item, side, stageType) {
+      if (stageType === "verbPrep") {
+        if (side === "right") {
+          return `<span class="card-text">${renderVerbPrepRight(item)}</span>`;
+        }
+        return `<span class="card-text"><span class="card-text-main">${escapeHtml(item.left)}</span></span>`;
+      }
+
+      if (side === "right" && item.rightLang === "de") {
+        return `<span class="card-text">${renderGermanWordWithArticle(item.right)}</span>`;
+      }
+
+      const value = side === "left" ? item.left : item.right;
+      return `<span class="card-text"><span class="card-text-main">${escapeHtml(value)}</span></span>`;
+    }
+
+    function createLeftCard(item, stageType) {
       const button = document.createElement("button");
       button.className = "card";
       button.type = "button";
-      button.textContent = item.en;
-      button.dataset.key = item.en;
-      button.dataset.side = "en";
-      button.addEventListener("click", () => handlePick(button));
+      button.innerHTML = getCardMarkup(item, "left", stageType);
+      button.dataset.key = item.key;
+      button.dataset.matchValue = stageType === "verbPrep"
+        ? `${item.preposition}|${item.grammaticalCase}`
+        : item.key;
+      button.dataset.side = "left";
+      button.addEventListener("click", () => {
+        if (stageType === "verbPrep") {
+          speakWord(item.left, "de");
+        }
+        handlePick(button);
+      });
       return button;
     }
 
-    function createGermanRow(item) {
+    function createRightRow(item, stageType) {
       const row = document.createElement("div");
       row.className = "card-row";
+      if (stageType === "verbPrep") {
+        row.classList.add("no-star");
+      }
 
       const card = document.createElement("button");
       card.className = "card";
       card.type = "button";
-      card.textContent = item.de;
-      card.dataset.key = item.en;
-      card.dataset.side = "de";
-      card.dataset.wordDe = item.de;
+      card.innerHTML = getCardMarkup(item, "right", stageType);
+      card.dataset.key = item.key;
+      card.dataset.matchValue = stageType === "verbPrep"
+        ? `${item.preposition}|${item.grammaticalCase}`
+        : item.key;
+      card.dataset.side = "right";
       card.addEventListener("click", () => {
-        speakGerman(item.de);
+        if (stageType === "words") {
+          speakWord(item.right, currentPair.rightLang);
+        }
         handlePick(card);
       });
+
+      row.appendChild(card);
+      if (stageType === "verbPrep") {
+        return row;
+      }
 
       const star = document.createElement("button");
       star.type = "button";
@@ -886,11 +2406,10 @@
         const isNowStarred = toggleDictionaryWord(item);
         star.classList.toggle("on", isNowStarred);
         statusEl.textContent = isNowStarred
-          ? `Added to dictionary: ${item.de}`
-          : `Removed from dictionary: ${item.de}`;
+          ? `Added to dictionary: ${item.right}`
+          : `Removed from dictionary: ${item.right}`;
       });
 
-      row.appendChild(card);
       row.appendChild(star);
       return row;
     }
@@ -918,24 +2437,25 @@
     }
 
     function renderStage() {
-      const stageWords = stages[stageIndex];
-      const english = stageWords.map((word) => ({ ...word }));
-      const german = stageWords.map((word) => ({ ...word }));
+      const stage = stages[stageIndex];
+      const stageWords = stage.items;
+      const leftWords = stageWords.map((word) => ({ ...word }));
+      const rightWords = stageWords.map((word) => ({ ...word }));
 
       englishRoot.innerHTML = "";
       germanRoot.innerHTML = "";
 
       currentStageWordsByKey = {};
       stageWords.forEach((word) => {
-        currentStageWordsByKey[word.en] = word;
+        currentStageWordsByKey[word.key] = word;
       });
 
-      shuffle(english).forEach((item) => {
-        englishRoot.appendChild(createEnglishCard(item));
+      shuffle(leftWords).forEach((item) => {
+        englishRoot.appendChild(createLeftCard(item, stage.type));
       });
 
-      shuffle(german).forEach((item) => {
-        germanRoot.appendChild(createGermanRow(item));
+      shuffle(rightWords).forEach((item) => {
+        germanRoot.appendChild(createRightRow(item, stage.type));
       });
 
       selectedEnglish = null;
@@ -944,11 +2464,27 @@
       stagePoints = 0;
       locked = false;
 
-      modePill.textContent = dictionaryOnlyMode ? "Mode: Dictionary" : "Mode: Level";
-      levelPill.textContent = `Level: ${selectedLevel}`;
+      modePill.textContent = selectedGameMode === GAME_MODES.VERB
+        ? "Mode: Verb + Preposition"
+        : dictionaryOnlyMode
+          ? `Mode: Mixed Dictionary ${currentPair.id}`
+          : `Mode: Mixed ${currentPair.id}`;
+      levelPill.textContent = selectedGameMode === GAME_MODES.VERB ? "Level: Grammar" : `Level: ${selectedLevel}`;
       stagePill.textContent = `Stage: ${stageIndex + 1}`;
       totalPill.textContent = `Total points: ${totalPoints}`;
-      statusEl.textContent = "Choose one English card and one German card. Click ★ to save German words.";
+      if (stage.type === "verbPrep") {
+        leftHeadingEl.textContent = "Verb";
+        rightHeadingEl.textContent = "Preposition + Case";
+        statusEl.textContent = "Match the verb with its fixed preposition and case.";
+        contextMainEl.textContent = "A German example will appear here after a correct match.";
+        contextTranslationEl.textContent = "The pattern will appear on a separate line.";
+      } else {
+        leftHeadingEl.textContent = currentPair.leftLabel;
+        rightHeadingEl.textContent = currentPair.rightLabel;
+        statusEl.textContent = "Choose one card in each column. Click ★ to save words.";
+        contextMainEl.textContent = "Context example will appear here after a correct match.";
+        contextTranslationEl.textContent = "Translation will appear on a separate line.";
+      }
 
       startTimer();
     }
@@ -957,14 +2493,240 @@
       card.classList.remove("selected", "wrong");
       card.classList.add("matched");
       card.disabled = true;
+    }
 
-      const row = card.closest(".card-row");
-      if (row) {
-        const star = row.querySelector(".star-btn");
-        if (star) {
-          star.disabled = true;
+    function buildGameContextExample(word) {
+      const key = (word.key || word.right).toLowerCase();
+      const usage = contextUsageByKey[key] || 0;
+      contextUsageByKey[key] = usage + 1;
+      const deWord = word.right;
+      const enWord = word.leftLang === "en" ? word.left : word.key;
+      const ruWord = word.leftLang === "ru" ? word.left : getRussianWord({ en: word.key, de: word.right });
+
+      function stableIndex(text, size) {
+        let h = 0;
+        for (let i = 0; i < text.length; i += 1) {
+          h = (h * 31 + text.charCodeAt(i)) >>> 0;
         }
+        return size ? h % size : 0;
       }
+
+      function fillTemplate(template, lang) {
+        const term = lang === "de" ? deWord : lang === "en" ? enWord : ruWord;
+        return template
+          .replaceAll("{WORD}", term)
+          .replaceAll("{RU_WORD}", ruWord)
+          .replaceAll("{EN_WORD}", enWord)
+          .replaceAll("{DE_WORD}", deWord);
+      }
+
+      function capitalizeFirst(text) {
+        if (!text || !text.length) return text;
+        return text.charAt(0).toUpperCase() + text.slice(1);
+      }
+
+      const specific = SPECIFIC_CONTEXTS[key];
+      if (specific) {
+        if (currentPair.rightLang === "de") {
+          return {
+            example: `Beispiel (DE): ${capitalizeFirst(fillTemplate(specific.de, "de"))}`,
+            translation: currentPair.leftLang === "ru"
+              ? `Перевод (RU): ${capitalizeFirst(fillTemplate(specific.ru, "ru"))}`
+              : `Translation (EN): ${capitalizeFirst(fillTemplate(specific.en, "en"))}`
+          };
+        }
+        return {
+          example: `Example (EN): ${capitalizeFirst(fillTemplate(specific.en, "en"))}`,
+          translation: `Перевод (RU): ${capitalizeFirst(fillTemplate(specific.ru, "ru"))}`
+        };
+      }
+
+      const foodWords = new Set(["apple", "bread", "milk", "cheese", "fish", "meat", "egg", "coffee", "tea", "juice", "soup", "salad", "rice", "pasta", "potato", "tomato", "onion", "salt", "pepper", "sugar", "breakfast", "lunch", "dinner"]);
+      const travelWords = new Set(["train", "bus", "car", "bicycle", "street", "station", "airport", "ticket", "suitcase", "passport", "journey", "trip", "hotel", "bridge", "square", "map", "traffic", "traffic light", "crosswalk", "bus stop"]);
+      const homeWords = new Set(["house", "apartment", "room", "kitchen", "bathroom", "door", "window", "table", "chair", "bed", "garden", "balcony"]);
+      const workStudyWords = new Set(["school", "teacher", "student", "office", "project", "course", "exam", "grade", "meeting", "profession", "salary", "career", "computer", "phone", "message"]);
+      const weatherNatureWords = new Set(["sun", "rain", "snow", "wind", "summer", "winter", "spring", "autumn", "tree", "flower", "park", "river", "mountain", "forest", "lake", "cloud", "storm", "temperature", "weather", "beach"]);
+
+      let topic = "general";
+      if (foodWords.has(key)) topic = "food";
+      else if (travelWords.has(key)) topic = "travel";
+      else if (homeWords.has(key)) topic = "home";
+      else if (workStudyWords.has(key)) topic = "work";
+      else if (weatherNatureWords.has(key)) topic = "nature";
+
+      const deExamples = {
+        food: [
+          `${deWord} ist heute mein Frühstück.`,
+          `Ich koche heute mit ${deWord}.`,
+          `${deWord} schmeckt besser mit Salz.`,
+          `Im Supermarkt kaufe ich ${deWord}.`,
+          `Ohne ${deWord} ist das Rezept nicht komplett.`,
+          `Zum Abendessen gibt es ${deWord}.`
+        ],
+        travel: [
+          `Ohne ${deWord} komme ich nicht rechtzeitig an.`,
+          `Am Bahnhof suche ich sofort ${deWord}.`,
+          `${deWord} ist für diese Reise entscheidend.`,
+          `Vor der Abfahrt prüfe ich ${deWord}.`,
+          `Auf der Karte markiere ich ${deWord}.`,
+          `Bei der Reiseplanung fehlt noch ${deWord}.`
+        ],
+        home: [
+          `${deWord} steht direkt neben dem Fenster.`,
+          `Zu Hause brauche ich ${deWord} jeden Tag.`,
+          `Im Wohnzimmer fehlt nur noch ${deWord}.`,
+          `Beim Aufräumen finde ich endlich ${deWord}.`,
+          `${deWord} passt gut in dieses Zimmer.`,
+          `Ich stelle ${deWord} in die Ecke.`
+        ],
+        work: [
+          `Im Meeting sprechen wir nur über ${deWord}.`,
+          `${deWord} steht heute ganz oben auf der Liste.`,
+          `Ohne ${deWord} kann das Projekt nicht starten.`,
+          `Unser Chef fragt ständig nach ${deWord}.`,
+          `Im Bericht erkläre ich kurz ${deWord}.`,
+          `${deWord} entscheidet heute über den Plan.`
+        ],
+        nature: [
+          `Draußen merke ich sofort ${deWord}.`,
+          `Im Park sprechen wir über ${deWord}.`,
+          `${deWord} verändert heute den ganzen Tag.`,
+          `Beim Spaziergang beobachte ich ${deWord}.`,
+          `Auf dem Berg ist ${deWord} stärker.`,
+          `Morgens sehe ich zuerst ${deWord}.`
+        ],
+        general: [
+          `Ich bin mit dieser ${deWord} nicht einverstanden.`,
+          `Bei diesem Thema gibt es Streit über ${deWord}.`,
+          `Seine ${deWord} klingt logisch, aber kalt.`,
+          `Heute diskutieren wir nur ${deWord}.`,
+          `${deWord} hilft, das Problem klarer zu sehen.`,
+          `Ohne ${deWord} bleibt die Entscheidung unklar.`
+        ]
+      };
+
+      const enExamples = {
+        food: [
+          `${enWord} is my breakfast today.`,
+          `I am cooking with ${enWord} today.`,
+          `${enWord} tastes better with salt.`,
+          `I buy ${enWord} at the supermarket.`,
+          `The recipe is incomplete without ${enWord}.`,
+          `We are having ${enWord} for dinner.`
+        ],
+        travel: [
+          `Without ${enWord}, I will miss the train.`,
+          `At the station, I look for ${enWord} first.`,
+          `${enWord} is essential for this trip.`,
+          `Before departure, I check ${enWord} again.`,
+          `I mark ${enWord} on the map.`,
+          `Our travel plan still lacks ${enWord}.`
+        ],
+        home: [
+          `${enWord} is right next to the window.`,
+          `At home, I need ${enWord} every day.`,
+          `Only ${enWord} is missing in the living room.`,
+          `While cleaning, I finally find ${enWord}.`,
+          `${enWord} fits this room perfectly.`,
+          `I put ${enWord} in the corner.`
+        ],
+        work: [
+          `In the meeting, we only discuss ${enWord}.`,
+          `${enWord} is at the top of today’s list.`,
+          `Without ${enWord}, the project cannot start.`,
+          `Our manager keeps asking about ${enWord}.`,
+          `In the report, I briefly explain ${enWord}.`,
+          `${enWord} decides today’s plan.`
+        ],
+        nature: [
+          `Outside, I notice ${enWord} immediately.`,
+          `In the park, we talk about ${enWord}.`,
+          `${enWord} changes the whole day.`,
+          `During a walk, I observe ${enWord}.`,
+          `On the mountain, ${enWord} is stronger.`,
+          `In the morning, I see ${enWord} first.`
+        ],
+        general: [
+          `I disagree with this ${enWord}.`,
+          `People still argue about ${enWord}.`,
+          `His ${enWord} sounds logical but cold.`,
+          `Today we discuss only ${enWord}.`,
+          `${enWord} helps us see the problem more clearly.`,
+          `Without ${enWord}, the decision stays unclear.`
+        ]
+      };
+
+      const ruExamples = {
+        food: [
+          `${word.left} — мой сегодняшний завтрак.`,
+          `Сегодня я готовлю с ингредиентом «${word.left}».`,
+          `Слово «${word.left}» часто встречается в рецептах.`,
+          `В магазине я покупаю ${word.left}.`,
+          `Без слова «${word.left}» этот рецепт не объяснить.`,
+          `На ужин у нас будет ${word.left}.`
+        ],
+        travel: [
+          `Без ${word.left} я опоздаю на поезд.`,
+          `На вокзале я сначала ищу ${word.left}.`,
+          `${word.left} очень важно в этой поездке.`,
+          `Перед отправлением я снова проверяю ${word.left}.`,
+          `На карте я отмечаю ${word.left}.`,
+          `В плане поездки нам не хватает ${word.left}.`
+        ],
+        home: [
+          `${word.left} стоит прямо у окна.`,
+          `Дома мне каждый день нужно ${word.left}.`,
+          `В гостиной не хватает только ${word.left}.`,
+          `Во время уборки я наконец нахожу ${word.left}.`,
+          `${word.left} идеально подходит этой комнате.`,
+          `Я ставлю ${word.left} в угол.`
+        ],
+        work: [
+          `На встрече мы обсуждаем только ${word.left}.`,
+          `${word.left} — первый пункт в сегодняшнем списке.`,
+          `Без ${word.left} проект не стартует.`,
+          `Руководитель постоянно спрашивает про ${word.left}.`,
+          `В отчете я коротко объясняю ${word.left}.`,
+          `${word.left} определяет наш план на сегодня.`
+        ],
+        nature: [
+          `На улице я сразу замечаю ${word.left}.`,
+          `В парке мы говорим про ${word.left}.`,
+          `${word.left} меняет весь день.`,
+          `На прогулке я наблюдаю ${word.left}.`,
+          `В горах ${word.left} ощущается сильнее.`,
+          `Утром я первым делом вижу ${word.left}.`
+        ],
+        general: [
+          `Я не согласен с такой формулировкой: ${word.left}.`,
+          `Из-за ${word.left} спор снова зашел в тупик.`,
+          `Аргумент про ${word.left} звучит логично, но не убеждает.`,
+          `В этом решении именно ${word.left} вызывает сомнения.`,
+          `Сегодня мы обсуждаем только ${word.left}.`,
+          `${word.left} помогает точнее понять проблему.`
+        ]
+      };
+
+      const deList = deExamples[topic];
+      const enList = enExamples[topic];
+      const ruList = ruExamples[topic];
+      const base = stableIndex(key, deList.length);
+      const idx = (base + usage) % deList.length;
+      const deLine = capitalizeFirst(deList[idx]);
+      const enLine = capitalizeFirst(enList[idx % enList.length]);
+      const ruLine = capitalizeFirst(ruList[idx % ruList.length]);
+
+      if (currentPair.rightLang === "de") {
+        const example = `Beispiel (DE): ${deLine}`;
+        const translation = currentPair.leftLang === "ru"
+          ? `Перевод (RU): ${ruLine}`
+          : `Translation (EN): ${enLine}`;
+        return { example, translation };
+      }
+
+      const example = `Example (EN): ${enLine}`;
+      const translation = `Перевод (RU): ${ruLine}`;
+      return { example, translation };
     }
 
     function clearSelection() {
@@ -982,7 +2744,7 @@
         return;
       }
 
-      if (card.dataset.side === "en") {
+      if (card.dataset.side === "left") {
         if (selectedEnglish === card) {
           card.classList.remove("selected");
           selectedEnglish = null;
@@ -1012,7 +2774,10 @@
     }
 
     function evaluatePair() {
-      const isMatch = selectedEnglish.dataset.key === selectedGerman.dataset.key;
+      const stage = stages[stageIndex];
+      const isMatch = stage.type === "verbPrep"
+        ? selectedEnglish.dataset.matchValue === selectedGerman.dataset.matchValue
+        : selectedEnglish.dataset.key === selectedGerman.dataset.key;
 
       if (isMatch) {
         stagePoints += 1;
@@ -1024,6 +2789,17 @@
         matchedCount += 1;
 
         statusEl.textContent = "Correct match!";
+        const matchedWord = currentStageWordsByKey[selectedEnglish.dataset.key];
+        if (matchedWord) {
+          if (stage.type === "verbPrep") {
+            contextMainEl.textContent = `Beispiel (DE): ${matchedWord.example}`;
+            contextTranslationEl.textContent = `Rektion: ${matchedWord.preposition} + ${matchedWord.grammaticalCase}`;
+          } else {
+            const context = buildGameContextExample(matchedWord);
+            contextMainEl.textContent = context.example;
+            contextTranslationEl.textContent = context.translation;
+          }
+        }
         totalPill.textContent = `Total points: ${totalPoints}`;
         clearSelection();
 
@@ -1071,7 +2847,13 @@
         stageTitle.textContent = "Time is up";
       } else {
         const isLastStageComplete = stageIndex === stages.length - 1;
-        stageTitle.textContent = isLastStageComplete ? `Level ${selectedLevel} completed` : "Stage complete";
+        if (isLastStageComplete) {
+          stageTitle.textContent = selectedGameMode === GAME_MODES.VERB
+            ? "Verb training completed"
+            : `Level ${selectedLevel} completed`;
+        } else {
+          stageTitle.textContent = "Stage complete";
+        }
       }
 
       stagePointsEl.textContent = `Stage points: ${stagePoints}`;
@@ -1083,19 +2865,27 @@
       overlay.classList.add("open");
     }
 
-    function startGame(level) {
+    function startGame(level, pairId, mode = GAME_MODES.MIXED) {
+      if (!currentUserName) {
+        showAuth("Please log in first.");
+        return;
+      }
       selectedLevel = level;
+      selectedPairId = pairId;
+      selectedGameMode = mode;
+      currentPair = PAIRS[selectedPairId] || PAIRS["EN-DE"];
       dictionaryOnlyMode = dictOnlyInput.checked;
-
       const sourceWords = getPlayableWords(level, dictionaryOnlyMode);
-      if (sourceWords.length < 5) {
+      if (mode !== GAME_MODES.VERB && sourceWords.length < 5) {
         frontStatusEl.textContent = "Need at least 5 starred words in your dictionary for this mode.";
         return;
       }
 
-      stages = buildStages(sourceWords);
+      stages = buildStageSequence(level, dictionaryOnlyMode, mode);
       if (!stages.length) {
-        frontStatusEl.textContent = "Not enough words to build stages.";
+        frontStatusEl.textContent = mode === GAME_MODES.VERB
+          ? "Not enough grammar pairs to build stages."
+          : "Not enough words to build stages.";
         return;
       }
 
@@ -1119,8 +2909,17 @@
       overlay.classList.remove("open");
       gameScreen.classList.add("hidden");
       trainingScreen.classList.add("hidden");
-      frontScreen.classList.remove("hidden");
+      showFront();
       statusEl.textContent = "";
+    }
+
+    function logOut() {
+      clearSessionUser();
+      currentUserName = null;
+      bestScore = 0;
+      dictionaryWords = [];
+      recentSessionsByMode = {};
+      showAuth("You are logged out.");
     }
 
     function sanitizeNoun(word) {
@@ -1128,10 +2927,19 @@
     }
 
     function buildTrainingContent(word) {
-      const noun = sanitizeNoun(word.de);
-      const definition = `Das Wort \"${word.de}\" ist ein Nomen. Es bedeutet auf Englisch \"${word.en}\" und wird oft in Alltagssituationen benutzt.`;
-      const example = `Im Kontext: Ich sehe ${word.de.toLowerCase()} und spreche darueber, weil ${noun.toLowerCase()} hier wichtig ist.`;
+      if (word.rightLang === "de") {
+        trainingDefinitionLabelEl.textContent = "Definition (DE)";
+        trainingExampleLabelEl.textContent = "Example (DE)";
+        const noun = sanitizeNoun(word.right);
+        const definition = `Das Wort \"${word.right}\" ist ein Nomen. Es bedeutet \"${word.left}\" und wird oft in Alltagssituationen benutzt.`;
+        const example = `Im Kontext: Ich sehe ${word.right.toLowerCase()} und spreche darüber, weil ${noun.toLowerCase()} hier wichtig ist.`;
+        return { definition, example };
+      }
 
+      trainingDefinitionLabelEl.textContent = "Definition (EN)";
+      trainingExampleLabelEl.textContent = "Example (EN)";
+      const definition = `The word \"${word.right}\" means \"${word.left}\" and is used in everyday communication.`;
+      const example = `In context: I use ${word.right.toLowerCase()} when discussing this topic in daily life.`;
       return { definition, example };
     }
 
@@ -1153,8 +2961,8 @@
       const word = trainingWords[trainingIndex];
       const content = buildTrainingContent(word);
 
-      trainingWordEl.textContent = word.de;
-      trainingTranslationEl.textContent = `English: ${word.en} | Level: ${word.level || "-"}`;
+      trainingWordEl.textContent = word.right;
+      trainingTranslationEl.textContent = `${word.leftLang.toUpperCase()} -> ${word.rightLang.toUpperCase()}: ${word.left} | Level: ${word.level || "-"}`;
       trainingDefinitionEl.textContent = content.definition;
       trainingExampleEl.textContent = content.example;
       trainingStatusEl.textContent = `Word ${trainingIndex + 1} of ${trainingWords.length}`;
@@ -1166,8 +2974,10 @@
       trainingRemoveBtn.disabled = false;
     }
 
-    function openDictionaryTraining() {
-      trainingWords = shuffle(dictionaryWords.map((word) => ({ ...word })));
+    function openDictionaryTraining(pairId) {
+      selectedPairId = pairId;
+      currentPair = PAIRS[selectedPairId] || PAIRS["EN-DE"];
+      trainingWords = shuffle(dictionaryWords.filter((word) => word.pairId === currentPair.id).map((word) => ({ ...word })));
       trainingIndex = 0;
 
       frontStatusEl.textContent = "";
@@ -1178,19 +2988,79 @@
       renderTrainingWord();
     }
 
+    loginBtn.addEventListener("click", () => {
+      const username = normalizeUsername(authUsernameEl.value);
+      const password = authPasswordEl.value;
+      if (!username || !password) {
+        authStatusEl.textContent = "Enter username and password.";
+        return;
+      }
+
+      const user = findUser(username);
+      if (!user || user.password !== password) {
+        authStatusEl.textContent = "Invalid credentials.";
+        return;
+      }
+
+      setCurrentUser(user.username);
+      setSessionUser(user.username, rememberMeEl.checked);
+      authPasswordEl.value = "";
+      showFront();
+    });
+
+    registerBtn.addEventListener("click", () => {
+      const username = normalizeUsername(authUsernameEl.value);
+      const password = authPasswordEl.value;
+      if (username.length < 3) {
+        authStatusEl.textContent = "Username must be at least 3 characters.";
+        return;
+      }
+      if (password.length < 4) {
+        authStatusEl.textContent = "Password must be at least 4 characters.";
+        return;
+      }
+      if (findUser(username)) {
+        authStatusEl.textContent = "User already exists.";
+        return;
+      }
+
+      users.push({
+        username,
+        password,
+        bestScore: 0,
+        dictionaryWords: [],
+        recentSessionsByMode: {}
+      });
+      saveUsers();
+      renderLeaderboard();
+      setCurrentUser(username);
+      setSessionUser(username, rememberMeEl.checked);
+      authPasswordEl.value = "";
+      authStatusEl.textContent = "";
+      showFront();
+    });
+
     startGameBtn.addEventListener("click", () => {
       const picked = document.querySelector('input[name="difficulty"]:checked');
-      startGame(picked ? picked.value : "A1");
+      const pickedPair = document.querySelector('input[name="pair"]:checked');
+      startGame(picked ? picked.value : "A1", pickedPair ? pickedPair.value : "EN-DE", GAME_MODES.MIXED);
+    });
+
+    startVerbGameBtn.addEventListener("click", () => {
+      const picked = document.querySelector('input[name="difficulty"]:checked');
+      const pickedPair = document.querySelector('input[name="pair"]:checked');
+      startGame(picked ? picked.value : "A1", pickedPair ? pickedPair.value : "EN-DE", GAME_MODES.VERB);
     });
 
     startTrainingBtn.addEventListener("click", () => {
-      openDictionaryTraining();
+      const pickedPair = document.querySelector('input[name="pair"]:checked');
+      openDictionaryTraining(pickedPair ? pickedPair.value : "EN-DE");
     });
 
     nextStageBtn.addEventListener("click", () => {
       overlay.classList.remove("open");
       if (stageIndex === stages.length - 1) {
-        stages = buildStages(getPlayableWords(selectedLevel, dictionaryOnlyMode));
+        stages = buildStageSequence(selectedLevel, dictionaryOnlyMode, selectedGameMode);
         stageIndex = 0;
         totalPoints = 0;
       } else {
@@ -1203,8 +3073,22 @@
       backToMenu();
     });
 
-    gameHomeBtn.addEventListener("click", () => {
-      backToMenu();
+    homeBrandButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        backToMenu();
+      });
+    });
+
+    logoutFrontBtn.addEventListener("click", () => {
+      logOut();
+    });
+
+    logoutGameBtn.addEventListener("click", () => {
+      logOut();
+    });
+
+    logoutTrainingBtn.addEventListener("click", () => {
+      logOut();
     });
 
     trainingPrevBtn.addEventListener("click", () => {
@@ -1227,7 +3111,7 @@
       if (!trainingWords.length) {
         return;
       }
-      speakGerman(trainingWords[trainingIndex].de);
+      speakWord(trainingWords[trainingIndex].right, trainingWords[trainingIndex].rightLang);
     });
 
     trainingRemoveBtn.addEventListener("click", () => {
@@ -1236,9 +3120,9 @@
       }
 
       const current = trainingWords[trainingIndex];
-      dictionaryWords = dictionaryWords.filter((entry) => entry.de !== current.de);
+      dictionaryWords = dictionaryWords.filter((entry) => !(entry.pairId === current.pairId && entry.right === current.right));
       persistDictionary();
-      trainingWords = trainingWords.filter((entry) => entry.de !== current.de);
+      trainingWords = trainingWords.filter((entry) => !(entry.pairId === current.pairId && entry.right === current.right));
 
       if (trainingIndex >= trainingWords.length) {
         trainingIndex = Math.max(0, trainingWords.length - 1);
@@ -1247,11 +3131,14 @@
       renderTrainingWord();
     });
 
-    trainingBackBtn.addEventListener("click", () => {
-      backToMenu();
-    });
-
-    loadState();
+    loadUsers();
+    renderLeaderboard();
+    const sessionUser = getSessionUser();
+    if (sessionUser && setCurrentUser(sessionUser)) {
+      showFront();
+    } else {
+      showAuth();
+    }
     initSpeech();
   </script>
 </body>
